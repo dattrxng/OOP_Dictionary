@@ -1,4 +1,4 @@
-package CommandLine;
+package DictionaryCommandLine;
 
 import java.util.Objects;
 

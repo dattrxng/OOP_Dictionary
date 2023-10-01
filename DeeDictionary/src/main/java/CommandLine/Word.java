@@ -1,6 +1,7 @@
 package CommandLine;
 
 import java.util.Objects;
+
 public class Word {
     private String word_target;
     private String word_explain;
@@ -9,6 +10,7 @@ public class Word {
         this.word_target = word_target;
         this.word_explain = word_explain;
     }
+
     public Word() {
         this("", "");
     }
@@ -44,6 +46,6 @@ public class Word {
 
     @Override
     public String toString() {
-        return "Word{" + "word_target='" + word_target + '\'' + ", word_explain='" + word_explain + '\'' + '}';
+        return "Word[" + "word_target=" + word_target + ", word_explain=" + word_explain + ']';
     }
 }

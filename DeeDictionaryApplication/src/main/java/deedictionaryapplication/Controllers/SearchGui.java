@@ -72,6 +72,7 @@ public class SearchGui implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dictionaryManagement.getConnection();
+        dictionaryManagement.getAllWords(dictionary);
         System.out.println(dictionary.size());
         dictionaryManagement.setTrie(dictionary);
         setListDefault(0);

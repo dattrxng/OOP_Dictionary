@@ -11,9 +11,9 @@ import java.util.Comparator;
 import java.util.List;
 
 public class DictionaryManagement {
-    private static final String DB_URL = "jdbc:mysql://localhost:3307/deedictionary";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/dictionary";
     private static final String USER = "root";
-    private static final String PASS = "tenladuc";
+    private static final String PASS = "27092004";
 
     private static Connection CONNECTION = null;
 
@@ -21,7 +21,7 @@ public class DictionaryManagement {
 
     public void getConnection() {
         try {
-            CONNECTION = DriverManager.getConnection(DB_URL, USER, PASS); // Gán kết nối cho biến CONNECTION
+            CONNECTION = DriverManager.getConnection(DB_URL, USER, PASS);
             System.out.println("Connected to Database!!");
         } catch (SQLException e) {
             System.out.println("Connection failed!!");

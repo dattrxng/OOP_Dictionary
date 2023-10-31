@@ -38,7 +38,7 @@ public class SearchGui implements Initializable {
     private ListView<String> listResults;
     private Dictionary dictionary = new Dictionary();
     private DictionaryManagement dictionaryManagement = new DictionaryManagement();
-    private final String path = "src/main/resources/dictinary.sql";
+
     ObservableList<String> list = FXCollections.observableArrayList();
     private int indexOfSelectedWord;
     private int firstIndexOfListFound = 0;
@@ -72,6 +72,7 @@ public class SearchGui implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dictionaryManagement.getConnection();
+        dictionaryManagement.getAllWords(dictionary);
         System.out.println(dictionary.size());
         dictionaryManagement.setTrie(dictionary);
         setListDefault(0);

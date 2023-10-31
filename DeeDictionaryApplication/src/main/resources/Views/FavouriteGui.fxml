@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="450.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deedictionaryapplication.Controllers.FavouriteGui">
+   <children>
+      <AnchorPane layoutY="47.0" prefHeight="403.0" prefWidth="290.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="460.0">
+         <children>
+            <Pane prefHeight="33.0" prefWidth="290.0" styleClass="title" stylesheets="@../Style.css">
+               <children>
+                  <TextField fx:id="searchTerm" layoutX="40.0" layoutY="3.0" prefHeight="25.0" prefWidth="210.0" promptText="Tìm kiếm từ đã lưu ...">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </TextField>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="14.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/icons8-search-30.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="cancelBtn" layoutX="250.0" layoutY="5.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0">
+                     <graphic>
+                        <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/close.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </Pane>
+            <ListView layoutX="5.0" layoutY="50.0" prefHeight="351.0" prefWidth="283.0" />
+         </children>
+      </AnchorPane>
+      <Pane prefHeight="39.0" prefWidth="727.0" styleClass="title" stylesheets="@../Style.css" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="10.0" layoutY="1.0" prefHeight="39.0" prefWidth="225.0" stylesheets="@../Style.css" text="Đã lưu" textFill="#00e7ff">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/icons8-star-50.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <AnchorPane layoutX="296.0" layoutY="47.0" prefHeight="403.0" prefWidth="458.0" AnchorPane.leftAnchor="296.0" AnchorPane.rightAnchor="1.0">
+         <children>
+            <Pane prefHeight="34.0" prefWidth="426.0" styleClass="title" stylesheets="@../Style.css">
+               <children>
+                  <Label layoutX="9.0" layoutY="-2.0" prefHeight="39.0" prefWidth="197.0" text="Word" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/icons8-drawing-block-64.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <TextArea layoutX="3.0" layoutY="53.0" prefHeight="344.0" prefWidth="426.0" text="Từ">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextArea>
+         </children></AnchorPane>
+   </children>
+</AnchorPane>

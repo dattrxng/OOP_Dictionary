@@ -1,0 +1,85 @@
+.sideBar {
+    -fx-background-insets: 0;
+    -fx-background-color: #fff;
+}
+
+.sideBar:focused {
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: #E9F8FE;
+
+}
+
+.sideBar:hover {
+    -fx-background-color: #F7FCFE;
+    -fx-border-color: #bfeafc;
+    -fx-border-width: 0 0 0 5;
+
+}
+
+#searchBox {
+    -fx-background-color: #5643fa;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+    -fx-effect: dropshadow(three-pass-box, #5643fa, 15, 0, 0, 2);
+}
+
+#searchTerm {
+    -fx-background-color: #5643fa;
+    -fx-text-fill: white;
+}
+
+#cancelBtn {
+    -fx-background-color: #5643fa;
+}
+
+.item {
+    -fx-background-color: TRANSPARENT;
+}
+.item:hover {
+    -fx-background-color: #cbfbff;
+}
+.title {
+    -fx-background-color: #5643fa;
+    -fx-effect: dropshadow(three-pass-box, #ffffff, 10, 0, 0, 0);
+    -fx-background-radius: 10;
+    -fx-border-radius: 5;
+}
+
+#explanation {
+    -fx-text-fill: #2137ff;
+}
+
+#separator {
+    -fx-background-color: #2137ff;
+}
+
+.Button {
+    -fx-background-color: #5643fa;
+    -fx-effect: dropshadow(three-pass-box, #5643fa, 5, 0, 0, 0);
+    -fx-background-radius: 5;
+    -fx-border-radius: 2;
+}
+.Button:hover {
+    -fx-background-color: #2137ff;
+}
+
+.header-translate {
+    -fx-border-color: #5643fa;
+    -fx-border-width: 1.5;
+    -fx-background-radius: 5 5 0 0;
+    -fx-border-radius: 5 5 0 0;
+}
+
+.speech-field {
+    -fx-border-color: #5643fa;
+    -fx-border-width: 1.5;
+    -fx-background-radius: 0 0 5 5;
+    -fx-border-radius: 0 0 5 5;
+}
+
+.add-box {
+    -fx-border-color: #5643fa;
+    -fx-border-width: 1 1 1 1;
+    -fx-border-radius: 5;
+}

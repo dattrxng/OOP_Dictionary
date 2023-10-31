@@ -44,10 +44,8 @@ public class SearchGui implements Initializable {
     private int firstIndexOfListFound = 0;
 
     private void setListDefault(int index) {
-        if (index == 0) headerList.setText("15 từ đầu tiên");
-        else headerList.setText("Kết quả liên quan");
         list.clear();
-        for (int i = index; i < index + 15; i++) list.add(dictionary.get(i).getWord_target());
+        for (int i = index; i < index + 10; i++) list.add(dictionary.get(i).getWord_target());
         listResults.setItems(list);
         englishWord.setText(dictionary.get(index).getWord_target());
         explanation.setText(dictionary.get(index).getWord_explain());

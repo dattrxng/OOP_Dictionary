@@ -6,9 +6,7 @@ import deedictionaryapplication.DictionaryCommandline.Word;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Comparator;
 import java.util.List;
 
@@ -31,9 +29,21 @@ public class DictionaryManagement {
         }
     }
 
+    public void getAllWords(Dictionary dictionary) {
+        final String SQLQuery = "SELECT * FROM dictionary";
+        try (PreparedStatement ps = CONNECTION.prepareStatement(SQLQuery);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                dictionary.add(new Word(rs.getString(2), rs.getString(3)));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public int searchWord(Dictionary dictionary, String keyWord) {
         try {
-            dictionary.sort((new Comparator<Word>() {
+            dictionary.sort(new Comparator<Word>() {
                 @Override
                 public int compare(Word o1, Word o2) {
                     return o1.getWord_target().compareTo(o2.getWord_target());
@@ -54,7 +64,7 @@ public class DictionaryManagement {
         return -1;
     }
 
-    public ObservableList<String> lookupWord(Dictionary dictionary, String key ) {
+    public ObservableList<String> lookupWord(Dictionary dictionary, String key) {
         ObservableList<String> list = FXCollections.observableArrayList();
         try {
             List<String> results = trie.autoComplete(key);
@@ -82,6 +92,7 @@ public class DictionaryManagement {
             System.out.println("Something went wrong: " + e);
         }
     }
+
     public void deleteWord(Dictionary dictionary, int index, String path) {
         try {
             dictionary.remove(index);
@@ -92,8 +103,8 @@ public class DictionaryManagement {
         }
     }
 
-    public void setTrie(Dictionary dictionary){
-        for(Word word : dictionary){
+    public void setTrie(Dictionary dictionary) {
+        for (Word word : dictionary) {
             trie.insert(word.getWord_target());
         }
 

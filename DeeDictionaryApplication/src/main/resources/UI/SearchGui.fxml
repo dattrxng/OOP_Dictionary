@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="450.0" prefWidth="750.0" stylesheets="@../Style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deedictionaryapplication.Controllers.SearchGui">
+<AnchorPane prefHeight="450.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deedictionaryapplication.Controllers.SearchGui">
    <children>
-      <Pane layoutY="6.0" prefHeight="84.0" prefWidth="750.0" stylesheets="@../Style.css" AnchorPane.bottomAnchor="365.0" AnchorPane.topAnchor="0.0">
+      <Pane layoutX="-8.0" prefHeight="84.0" prefWidth="750.0" stylesheets="@../Style.css" AnchorPane.bottomAnchor="364.8" AnchorPane.topAnchor="0.0">
          <children>
             <Pane fx:id="searchBox" layoutX="179.0" layoutY="14.0" prefHeight="35.0" prefWidth="312.0" stylesheets="@../Style.css">
                <children>
@@ -18,12 +18,12 @@
                         <Image url="@../Icons/icons8-search-30.png" />
                      </image>
                   </ImageView>
-                  <TextField fx:id="searchTerm" layoutX="40.0" layoutY="4.0" prefHeight="30.0" prefWidth="221.0" promptText="Nhập từ cần tìm kiếm ..." stylesheets="@../Style.css">
+                  <TextField fx:id="searchTerm" layoutX="40.0" layoutY="4.0" prefHeight="30.0" prefWidth="230.0" promptText="Nhập từ cần tìm kiếm ..." style="-fx-background-color: TRANSPARENT;" stylesheets="@../Style.css">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="cancelBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="273.0" layoutY="5.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="21.0" stylesheets="@../Style.css">
+                  <Button fx:id="cancelBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="273.0" layoutY="5.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="21.0" style="-fx-background-color: TRANSPARENT;" stylesheets="@../Style.css">
                      <graphic>
                         <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -49,7 +49,7 @@
                   <Image url="@../Icons/jelly-searching-for-a-new-employee.png" />
                </image>
             </ImageView>
-            <Label fx:id="notAvailableAlert" layoutX="208.0" layoutY="58.0" prefHeight="25.0" prefWidth="253.0" style="-fx-background-color: #f7c9c9;" stylesheets="@../Style.css" text="Từ bạn tra không có trong từ điển" textFill="#ec0000">
+            <Label fx:id="notAvailableAlert" layoutX="215.0" layoutY="58.0" prefHeight="24.0" prefWidth="246.0" style="-fx-background-color: F9DBDB; -fx-background-radius: 5 5 5 5; -fx-background-insets: 0;" stylesheets="@../Style.css" text="Từ bạn tra không có trong từ điển" textFill="#ec0000">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -70,7 +70,7 @@
       </Pane>
       <AnchorPane layoutY="90.0" prefHeight="362.0" prefWidth="750.0" stylesheets="@../Style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="85.0">
          <children>
-            <AnchorPane prefHeight="352.0" prefWidth="234.0" stylesheets="@../Style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="520.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="searchResult" prefHeight="352.0" prefWidth="234.0" stylesheets="@../Style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="520.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Pane layoutX="5.0" layoutY="8.0" prefHeight="35.0" prefWidth="221.0" styleClass="title" stylesheets="@../Style.css" AnchorPane.bottomAnchor="324.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="4.600000000000023" AnchorPane.topAnchor="7.0">
                      <children>
@@ -88,12 +88,12 @@
                         </Label>
                      </children>
                   </Pane>
-                  <ListView fx:id="listResults" layoutX="8.0" layoutY="56.0" prefHeight="310.0" prefWidth="220.0" styleClass="listview" stylesheets="@../Style.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0" />
+                  <ListView fx:id="listResults" layoutX="8.0" layoutY="56.0" onMouseClicked="#handleClickAWord" prefHeight="310.0" prefWidth="220.0" styleClass="list-cell" stylesheets="@../Style.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="224.0" prefHeight="352.0" prefWidth="526.0" stylesheets="@../Style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Pane layoutX="5.0" layoutY="7.0" prefHeight="35.0" prefWidth="477.0" styleClass="title" stylesheets="@../Style.css" AnchorPane.bottomAnchor="324.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="38.0" AnchorPane.topAnchor="7.0">
+                  <Pane layoutX="5.0" layoutY="6.0" prefHeight="35.0" prefWidth="477.0" styleClass="title" stylesheets="@../Style.css" AnchorPane.bottomAnchor="324.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="38.0" AnchorPane.topAnchor="6.0">
                      <children>
                         <Label layoutX="14.0" prefHeight="35.0" prefWidth="230.0" stylesheets="@../Style.css" text="Giải nghĩa" textFill="#00e7ff">
                            <font>
@@ -108,14 +108,14 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Pane layoutY="60.0" prefHeight="310.0" prefWidth="510.0" styleClass="searchPane" stylesheets="@../Style.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+                  <Pane layoutY="60.0" prefHeight="310.0" prefWidth="485.0" styleClass="searchPane" stylesheets="@../Style.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
                      <children>
-                        <TextArea fx:id="explanation" layoutY="41.0" prefHeight="270.0" prefWidth="477.0" stylesheets="@../Style.css" text="Xin chào">
+                        <TextArea fx:id="explanation" layoutY="41.0" prefHeight="270.0" prefWidth="477.0" styleClass="explanation" stylesheets="@../Style.css" text="Xin chào">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </TextArea>
-                        <Pane fx:id="headerOfExplanation" prefHeight="39.0" prefWidth="510.0" stylesheets="@../Style.css">
+                        <Pane fx:id="headerOfExplanation" prefHeight="39.0" prefWidth="477.0" stylesheets="@../Style.css">
                            <padding>
                               <Insets left="5.0" right="5.0" />
                            </padding>

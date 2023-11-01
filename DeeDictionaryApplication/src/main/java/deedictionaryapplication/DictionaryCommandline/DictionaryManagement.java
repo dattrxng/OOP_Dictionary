@@ -28,13 +28,27 @@ public class DictionaryManagement {
             e.printStackTrace();
         }
     }
+    public static String formatText(String inputText) {
+        // Sử dụng StringBuilder để xây dựng kết quả
+        StringBuilder result = new StringBuilder(inputText);
+
+        // Tìm và thay thế kí hiệu <br/> bằng dấu xuống dòng
+        int index = result.indexOf("<br />");
+        while (index != -1) {
+            result.replace(index, index + 5, System.lineSeparator());
+            index = result.indexOf("<br />");
+        }
+
+        return result.toString();
+    }
 
     public void getAllWords(Dictionary dictionary) {
         final String SQLQuery = "SELECT * FROM dictionary";
         try (PreparedStatement ps = CONNECTION.prepareStatement(SQLQuery);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                dictionary.add(new Word(rs.getString(2), rs.getString(3)));
+                String format =formatText(rs.getString(3));
+                dictionary.add(new Word(rs.getString(2), format));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

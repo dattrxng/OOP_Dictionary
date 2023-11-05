@@ -6,6 +6,8 @@ import deedictionaryapplication.DictionaryCommandline.Word;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.sql.*;
 import java.util.Comparator;
 import java.util.List;
@@ -28,18 +30,11 @@ public class DictionaryManagement {
             e.printStackTrace();
         }
     }
+
     public static String formatText(String inputText) {
-        // Sử dụng StringBuilder để xây dựng kết quả
-        StringBuilder result = new StringBuilder(inputText);
-
-        // Tìm và thay thế kí hiệu <br/> bằng dấu xuống dòng
-        int index = result.indexOf("<br />");
-        while (index != -1) {
-            result.replace(index, index + 5, System.lineSeparator());
-            index = result.indexOf("<br />");
-        }
-
-        return result.toString();
+        String result = inputText.replaceAll("<br\\s*/?>", System.lineSeparator());
+        result = result.replaceAll("<[^>]+>", "");
+        return result;
     }
 
     public void getAllWords(Dictionary dictionary) {
@@ -92,11 +87,64 @@ public class DictionaryManagement {
         return list;
     }
 
+//    public void deleteWordInSQL(Dictionary dictionary, int index) {
+//        if (index >= 0 && index < dictionary.size()) {
+//            try {
+//
+//                String deleteSQL = "DELETE FROM dictionary WHERE target = ?";
+//                PreparedStatement preparedStatement = CONNECTION.prepareStatement(deleteSQL);
+//                String target = dictionary.get(index).getWord_target();
+//                preparedStatement.setString(1, target);
+//
+//                int rowsAffected = preparedStatement.executeUpdate();
+//
+//                if (rowsAffected > 0) {
+//                    System.out.println("Word deleted successfully to MySQL.");
+//                } else {
+//                    System.out.println("Failed to delete the word to MySQL.");
+//                }
+//
+//                CONNECTION.close();
+//            } catch (SQLException e) {
+//                System.out.println("SQL error: " + e.getMessage());
+//            }
+//        } else {
+//            System.out.println("Invalid index.");
+//        }
+//    }
+
+    public void updateWordInSQL(Dictionary dictionary, int index, String meaning) {
+        if (index >= 0 && index < dictionary.size()) {
+            try {
+
+                String updateSQL = "UPDATE dictionary SET definition = ? WHERE target = ?";
+                PreparedStatement preparedStatement = CONNECTION.prepareStatement(updateSQL);
+                preparedStatement.setString(1, meaning);
+                String target = dictionary.get(index).getWord_target();
+                preparedStatement.setString(2, target);
+
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Word updated successfully to MySQL.");
+                } else {
+                    System.out.println("Failed to update the word to MySQL.");
+                }
+            } catch (SQLException e) {
+                System.out.println("SQL error: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Invalid index.");
+        }
+    }
+
+
     public void updateWord(Dictionary dictionary, int index, String meaning) {
         try {
             if (index >= 0 && index < dictionary.size()) {
 
                 dictionary.get(index).setWord_explain(meaning);
+                updateWordInSQL(dictionary,index,meaning);
 
                 System.out.println("Word updated successfully.");
             } else {
@@ -106,10 +154,35 @@ public class DictionaryManagement {
             System.out.println("Something went wrong: " + e);
         }
     }
+    public void deleteWordInSQL(Dictionary dictionary, int index) {
+        if (index >= 0 && index < dictionary.size()) {
+            try {
+                String deleteSQL = "DELETE FROM dictionary WHERE target = ?";
+                PreparedStatement preparedStatement = CONNECTION.prepareStatement(deleteSQL);
 
-    public void deleteWord(Dictionary dictionary, int index, String path) {
+                String target = dictionary.get(index).getWord_target();
+                preparedStatement.setString(1, target);
+
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Word deleted successfully from MySQL.");
+                } else {
+                    System.out.println("Failed to delete the word from MySQL.");
+                }
+
+            } catch (SQLException e) {
+                System.out.println("SQL error: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Invalid index.");
+        }
+    }
+
+    public void deleteWord(Dictionary dictionary, int index) {
         try {
             dictionary.remove(index);
+            deleteWordInSQL(dictionary, index);
             trie = new Trie();
             setTrie(dictionary);
         } catch (NullPointerException e) {
@@ -123,5 +196,54 @@ public class DictionaryManagement {
         }
 
     }
+    public void addWord(Dictionary dictionary, String target, String meaning) {
+        try {
+            // Thêm từ mới vào cơ sở dữ liệu
+            String insertSQL = "INSERT INTO dictionary (target, definition) VALUES (?, ?)";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(insertSQL);
+            preparedStatement.setString(1, target);
+            preparedStatement.setString(2, meaning);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                // Nếu thêm từ mới thành công, thêm nó vào từ điển và cập nhật cây trie
+                dictionary.add(new Word(target, meaning));
+                trie.insert(target);
+
+                System.out.println("Word added successfully to MySQL and dictionary.");
+            } else {
+                System.out.println("Failed to add the word to MySQL.");
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL error: " + e.getMessage());
+        }
+    }
+
+    public void setTimeout(Runnable runnable, int delay) {
+        new Thread(() -> {
+            try {
+                Thread.sleep(delay);
+                runnable.run();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }).start();
+    }
+
+    public void exportToFile(Dictionary dictionary, String DB_URL) {
+        try {
+            FileWriter fileWriter = new FileWriter(DB_URL);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            for (Word word : dictionary) {
+                bufferedWriter.write("|" + word.getWord_target() + "\n" + word.getWord_explain());
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.close();
+        } catch (Exception e) {
+            System.out.println("Something went wrong: " + e);
+        }
+    }
+
 
 }

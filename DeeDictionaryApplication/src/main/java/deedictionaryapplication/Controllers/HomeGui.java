@@ -1,5 +1,7 @@
 package deedictionaryapplication.Controllers;
 
+import deedictionaryapplication.DictionaryCommandline.Dictionary;
+import deedictionaryapplication.DictionaryCommandline.DictionaryManagement;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
@@ -30,8 +32,11 @@ public class HomeGui implements Initializable {
     @FXML
     boolean vboxVisible = true;
 
+    private DictionaryManagement dictionaryManagement = new DictionaryManagement();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        dictionaryManagement.getConnection();
+
     }
 
     @FXML

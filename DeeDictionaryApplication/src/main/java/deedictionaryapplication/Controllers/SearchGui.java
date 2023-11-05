@@ -1,5 +1,6 @@
 package deedictionaryapplication.Controllers;
 
+import deedictionaryapplication.Alert.Alerts;
 import deedictionaryapplication.DictionaryCommandline.Dictionary;
 import deedictionaryapplication.DictionaryCommandline.DictionaryManagement;
 import javafx.collections.FXCollections;
@@ -14,6 +15,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -36,6 +39,7 @@ public class SearchGui implements Initializable {
     private Label headerList;
     @FXML
     private ListView<String> listResults;
+    private Alerts alerts = new Alerts();
     private Dictionary dictionary = new Dictionary();
     private DictionaryManagement dictionaryManagement = new DictionaryManagement();
 
@@ -69,9 +73,7 @@ public class SearchGui implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        dictionaryManagement.getConnection();
         dictionaryManagement.getAllWords(dictionary);
-        System.out.println(dictionary.size());
         dictionaryManagement.setTrie(dictionary);
         setListDefault(0);
 
@@ -103,18 +105,52 @@ public class SearchGui implements Initializable {
         notAvailableAlert.setVisible(false);
     }
 
-    public void handleClickDeleteBtn(ActionEvent actionEvent) {
+    private void refreshAfterDelete() {
+        for (int i = 0; i < list.size(); i++)
+            if (list.get(i).equals(englishWord.getText())) {
+                list.remove(i);
+
+                break;
+            }
+        listResults.setItems(list);
+        headerOfExplanation.setVisible(false);
+        explanation.setVisible(false);
     }
 
-    public void handleClickEditBtn(ActionEvent actionEvent) {
+    public void handleClickDeleteBtn(ActionEvent actionEvent) {
+        Alert alertWarning = alerts.alertWarning("Xóa từ", "Bạn có chắc chắn muốn xóa từ này?");
+        alertWarning.getButtonTypes().add(ButtonType.CANCEL);
+        Optional<ButtonType> option = alertWarning.showAndWait();
+        if (option.get() == ButtonType.OK) {
+            dictionaryManagement.getConnection();
+            dictionaryManagement.deleteWord(dictionary, indexOfSelectedWord);
+            refreshAfterDelete();
+            alerts.showAlertInfo("Xóa từ", "Xóa thành công!");
+        }
     }
+
+
 
     public void handleClickSoundBtn(ActionEvent actionEvent) {
     }
 
-    public void handleClickSaveBtn(ActionEvent actionEvent) {
+
+    public void handleClickEditBtn(ActionEvent actionEvent) {
+        explanation.setEditable(true);
+        saveBtn.setVisible(true);
+        alerts.showAlertInfo("Cập nhật", "Cho phép sửa từ này!");
     }
 
+    public void handleClickSaveBtn(ActionEvent actionEvent) {
+        Alert alertConfirmation = alerts.alertConfirmation("Cập nhật", "Bạn có chắc chắn muốn cập nhật nghĩa của từ này?");
+        Optional<ButtonType> option = alertConfirmation.showAndWait();
+        if (option.get() == ButtonType.OK) {
+            dictionaryManagement.updateWord(dictionary, indexOfSelectedWord, explanation.getText());
+            alerts.showAlertInfo("Cập nhật", "Cập nhập thành công!");
+        }
+        saveBtn.setVisible(false);
+        explanation.setEditable(false);
+    }
     @FXML
     private void handleClickAWord(MouseEvent arg0) {
         String selectedWord = listResults.getSelectionModel().getSelectedItem();

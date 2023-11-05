@@ -1,6 +1,4 @@
 package deedictionaryapplication.Controllers;
 
-
-public class AddGui  {
-
+public class AddGui {
 }

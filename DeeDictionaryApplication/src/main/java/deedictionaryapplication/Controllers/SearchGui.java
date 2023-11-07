@@ -113,5 +113,23 @@ public class SearchGui implements Initializable {
     }
 
     public void handleClickSaveBtn(ActionEvent actionEvent) {
+<<<<<<< HEAD
+=======
+    }
+
+    @FXML
+    private void handleClickAWord(MouseEvent arg0) {
+        String selectedWord = listResults.getSelectionModel().getSelectedItem();
+        if (selectedWord != null) {
+            indexOfSelectedWord = dictionaryManagement.searchWord(dictionary, selectedWord);
+            if (indexOfSelectedWord == -1) return;
+            englishWord.setText(dictionary.get(indexOfSelectedWord).getWord_target());
+            explanation.setText(dictionary.get(indexOfSelectedWord).getWord_explain());
+            headerOfExplanation.setVisible(true);
+            explanation.setVisible(true);
+            explanation.setEditable(false);
+            saveBtn.setVisible(false);
+        }
+>>>>>>> 61d568258ef96dba06d5c20b62cd0b1877931e04
     }
 }

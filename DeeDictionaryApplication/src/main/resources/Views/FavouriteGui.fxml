@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="450.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deedictionaryapplication.Controllers.FavouriteGui">
+   <children>
+      <AnchorPane layoutY="105.0" prefHeight="346.0" prefWidth="229.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="521.0">
+         <children>
+            <ListView fx:id="listResults" layoutX="14.0" layoutY="43.0" onMouseClicked="#handleClickAWord" prefHeight="285.0" prefWidth="210.0" styleClass="list-cell" stylesheets="@../Style.css" />
+            <Label layoutX="16.0" layoutY="1.0" prefHeight="35.0" prefWidth="210.0" styleClass="title" stylesheets="@../Style.css" text="Từ yêu thích" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="17.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/icons8-favorites-50.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="230.4" layoutY="96.0" prefHeight="338.0" prefWidth="508.0" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="12.0">
+         <children>
+            <Pane layoutY="51.0" prefHeight="35.0" prefWidth="450.0" stylesheets="@../Style.css" AnchorPane.bottomAnchor="254.0">
+               <children>
+                  <Label fx:id="englishWord" layoutX="14.0" layoutY="5.0" prefHeight="30.0" prefWidth="198.0" text="Word" textFill="#073874">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="volumeBtn" layoutX="342.0" layoutY="3.0" mnemonicParsing="false" onAction="#handleClickSoundBtn" prefHeight="35.0" prefWidth="35.0" styleClass="item" stylesheets="@../Style.css">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/icons8-voice-24.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button layoutX="378.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleClickFavouriteBtn" prefHeight="35.0" prefWidth="35.0" styleClass="item" stylesheets="@../Style.css">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/icons8-star-80.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button layoutX="414.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleClickEditBtn" prefHeight="35.0" prefWidth="35.0" styleClass="item" stylesheets="@../Style.css">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/icons8-edit-64.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </Pane>
+            <TextArea fx:id="explanation" layoutY="86.0" prefHeight="251.0" prefWidth="450.0" styleClass="explanation" stylesheets="@../Style.css" text="Từ">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextArea>
+            <Label layoutX="4.0" layoutY="12.0" prefHeight="35.0" prefWidth="442.0" styleClass="title" stylesheets="@../Style.css" text="Giải nghĩa" textFill="WHITE" AnchorPane.topAnchor="10.0">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/icons8-explain-64.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold Italic" size="17.0" />
+               </font>
+            </Label>
+            <Button fx:id="saveBtn" layoutX="400.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleClickSaveBtn" prefHeight="32.0" prefWidth="32.0" styleClass="item" stylesheets="@../Style.css" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <graphic>
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/icons8-confirm-60.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children></AnchorPane>
+      <Pane id="searchBox" layoutX="197.0" layoutY="18.0" prefHeight="39.0" prefWidth="290.0" stylesheets="@../Style.css" AnchorPane.leftAnchor="197.0">
+         <children>
+            <TextField fx:id="searchTerm" layoutX="40.0" layoutY="5.0" prefHeight="25.0" prefWidth="210.0" promptText="Tìm kiếm từ đã lưu ..." style="-fx-background-color: TRANSPARENT;">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </TextField>
+            <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Icons/icons8-search-30.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="cancelBtn" layoutX="253.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="38.0" style="-fx-background-color: TRANSPARENT;" stylesheets="@../Style.css">
+               <graphic>
+                  <ImageView fitHeight="17.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/close.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </Pane>
+      <Label fx:id="notAvailableAlert" layoutX="215.0" layoutY="70.0" prefHeight="24.0" prefWidth="254.0" style="-fx-background-color: F9DBDB; -fx-background-radius: 5 5 5 5; -fx-background-insets: 0;" stylesheets="@../Style.css" text="Từ bạn tra không có trong danh sách" textFill="#ec0000">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Icons/icons8-warning-48.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="95.0" fitWidth="105.0" layoutX="47.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Icons/tiny-young-business-people-making-deal-and-giving-each-other-high-five.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="78.0" fitWidth="82.0" layoutX="557.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Icons/handy-line-rating-star.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

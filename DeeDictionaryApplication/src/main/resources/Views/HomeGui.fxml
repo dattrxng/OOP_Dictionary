@@ -210,6 +210,11 @@
                         <Tooltip text="Thu nhỏ" />
                      </tooltip>
                   </Button>
+                  <Label fx:id="topPane" layoutX="70.0" prefHeight="43.0" prefWidth="202.0" text="DEE DICTIONARY" textFill="#00e0fa">
+                     <font>
+                        <Font name="Berlin Sans FB Demi Bold" size="20.0" />
+                     </font>
+                  </Label>
                </children>
                <BorderPane.margin>
                   <Insets />
@@ -282,7 +287,7 @@
                            <graphic>
                               <ImageView fitHeight="61.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../Icons/icons8-star-50%20(1).png" />
+                                    <Image url="@../Icons/star.png" />
                                  </image>
                               </ImageView>
                            </graphic>

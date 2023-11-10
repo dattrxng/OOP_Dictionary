@@ -16,7 +16,7 @@
          <children>
             <Pane layoutX="9.0" layoutY="29.0" prefHeight="43.0" prefWidth="664.0" styleClass="header-translate">
                <children>
-                  <Label layoutX="94.0" layoutY="3.0" prefHeight="36.0" prefWidth="125.0" stylesheets="@../Style.css" text="Tiếng Anh" textFill="#073874">
+                  <Label fx:id="englishLabel" layoutX="94.0" layoutY="3.0" prefHeight="36.0" prefWidth="125.0" stylesheets="@../Style.css" text="Tiếng Anh" textFill="#073874">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -25,10 +25,10 @@
                         </ImageView>
                      </graphic>
                      <font>
-                        <Font name="Arial Bold" size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="432.0" layoutY="6.0" prefHeight="30.0" prefWidth="139.0" stylesheets="@../Style.css" text="Tiếng Việt" textFill="#073874">
+                  <Label fx:id="vietnameseLabel" layoutX="432.0" layoutY="6.0" prefHeight="30.0" prefWidth="139.0" stylesheets="@../Style.css" text="Tiếng Việt" textFill="#073874">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -37,10 +37,10 @@
                         </ImageView>
                      </graphic>
                      <font>
-                        <Font name="Arial Bold" size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Button layoutX="316.0" layoutY="7.0" mnemonicParsing="false" styleClass="item" stylesheets="@../Style.css">
+                  <Button layoutX="316.0" layoutY="7.0" mnemonicParsing="false" onAction="#handleOnClickSwitchToggle" styleClass="item" stylesheets="@../Style.css">
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -51,15 +51,15 @@
                   </Button>
                </children>
             </Pane>
-            <TextArea layoutX="9.0" layoutY="71.0" prefHeight="260.0" prefWidth="332.0" promptText="Type ..." styleClass="speech-field" stylesheets="@../Style.css">
+            <TextArea fx:id="sourceLangField" layoutX="9.0" layoutY="71.0" prefHeight="260.0" prefWidth="332.0" promptText="Type ..." styleClass="speech-field" stylesheets="@../Style.css">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font></TextArea>
-            <TextArea layoutX="341.0" layoutY="71.0" prefHeight="260.0" prefWidth="332.0" styleClass="speech-field" stylesheets="@../Style.css">
+            <TextArea fx:id="toLangField" layoutX="341.0" layoutY="71.0" prefHeight="260.0" prefWidth="332.0" styleClass="speech-field" stylesheets="@../Style.css">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="18.0" />
                </font></TextArea>
-            <Button alignment="CENTER" layoutX="296.0" layoutY="350.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="20.0" prefWidth="90.0" styleClass="Button" stylesheets="@../Style.css" text="Dịch" textFill="WHITE">
+            <Button fx:id="translateBtn" alignment="CENTER" layoutX="296.0" layoutY="350.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="20.0" prefWidth="90.0" styleClass="Button" stylesheets="@../Style.css" text="Dịch" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

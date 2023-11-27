@@ -168,7 +168,6 @@ public class DictionaryManagement {
                     System.out.println("Failed to delete the word from MySQL.");
                 }
 
-                //CONNECTION.close();
             } catch (SQLException e) {
                 System.out.println("SQL error: " + e.getMessage());
             }
@@ -219,7 +218,115 @@ public class DictionaryManagement {
         }
     }
 
+    public void getAllWordsInHistory(Dictionary history) {
+        final String SQLQuery = "SELECT * FROM history";
+        try (PreparedStatement ps = CONNECTION.prepareStatement(SQLQuery);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                history.add(new Word(rs.getString(2), rs.getString(3)));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void getAllWordsInBookmark(Dictionary bookmark) {
+        final String SQLQuery = "SELECT * FROM bookmark";
+        try (PreparedStatement ps = CONNECTION.prepareStatement(SQLQuery);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                bookmark.add(new Word(rs.getString(2), rs.getString(3)));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public void deleteWordFavourite(Dictionary bookmark, int index) {
+        try {
+            Word deletedWord = bookmark.remove(index);
+            deleteWordInBookmark(deletedWord);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteWordInBookmark(Word word) {
+        if (word != null) {
+            try {
+                String deleteSQL = "DELETE FROM bookmark WHERE target = ?";
+                PreparedStatement preparedStatement = CONNECTION.prepareStatement(deleteSQL);
+                preparedStatement.setString(1, word.getWord_target());
+
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Word remove successfully from MySQL.");
+                } else {
+                    System.out.println("Failed to remove the word from MySQL.");
+                }
+
+                //CONNECTION.close();
+            } catch (SQLException e) {
+                System.out.println("SQL error: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Invalid word.");
+        }
+    }
+
+    public void deleteWordHistory(Dictionary history, int index) {
+        try {
+            Word deletedWord = history.remove(index);
+            deleteWordInHistory(deletedWord);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteWordInHistory(Word word) {
+        if (word != null) {
+            try {
+                String deleteSQL = "DELETE FROM history WHERE target = ?";
+                PreparedStatement preparedStatement = CONNECTION.prepareStatement(deleteSQL);
+                preparedStatement.setString(1, word.getWord_target());
+
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Word remove successfully from MySQL.");
+                } else {
+                    System.out.println("Failed to remove the word from MySQL.");
+                }
+
+                //CONNECTION.close();
+            } catch (SQLException e) {
+                System.out.println("SQL error: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Invalid word.");
+        }
+    }
+
+    public void addWordInHistory(Dictionary history, String target, String meaning) {
+        try {
+            // Thêm từ mới vào cơ sở dữ liệu
+            String insertSQL = "INSERT INTO history (target, definition) VALUES (?, ?)";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(insertSQL);
+            preparedStatement.setString(1, target);
+            preparedStatement.setString(2, meaning);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                history.add(new Word(target, meaning));
+                System.out.println("Word added successfully to MySQL and history.");
+            } else {
+                System.out.println("Failed to add the word to MySQL.");
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL error: " + e.getMessage());
+        }
+    }
 
     public void setTimeout(Runnable runnable, int delay) {
         new Thread(() -> {

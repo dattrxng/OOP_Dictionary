@@ -4,10 +4,23 @@
     -fx-background-size: 800 500;
     -fx-background-position: center center;
 }
+#bgHangman {
+    -fx-background-image: url("Icons/darktheme.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 800 500;
+    -fx-background-position: center center;
+}
+#bgScramble {
+    -fx-background-image: url("Icons/ice.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 800 500;
+    -fx-background-position: center center;
+}
 .sideBar {
     -fx-background-insets: 0;
     -fx-background-color: TRANSPARENT;
 }
+
 .sideBar:hover {
     -fx-background-insets: 0;
     -fx-background-radius: 0;
@@ -15,10 +28,11 @@
     -fx-border-color: #03e1ff;
     -fx-border-width: 0 0 0 3;
 }
+
 .active {
     -fx-background-insets: 0;
     -fx-background-radius: 0;
-    -fx-background-color: #392ca6;
+    -fx-background-color: #073874;
     -fx-border-color: #03e1ff;
     -fx-border-width: 0 0 0 3;
 }
@@ -27,6 +41,7 @@
     -fx-background-insets: 0;
     -fx-background-color: TRANSPARENT;
 }
+
 .ButtonMain:hover {
     -fx-background-insets: 0;
     -fx-background-radius: 0;
@@ -59,6 +74,7 @@
 }
 
 .item:hover {
+    -fx-text-fill: black;
     -fx-background-color: #C9C9C9;
     -fx-border-radius: 5;
     -fx-background-radius: 7;
@@ -83,14 +99,14 @@
 }
 
 .Button {
-    -fx-background-color: #073874;
-    -fx-effect: dropshadow(three-pass-box, #073874, 5, 0, 0, 0);
+    -fx-background-color: #15437C;
+    -fx-effect: dropshadow(three-pass-box, #15437C, 5, 0, 0, 0);
     -fx-background-radius: 5;
     -fx-border-radius: 2;
 }
 
 .Button:hover {
-    -fx-background-color: #392ca6;
+    -fx-background-color: #073874;
 }
 
 .header-translate {
@@ -184,4 +200,19 @@
     -fx-background-color: #8BD3DB;
     -fx-background-insets: 2, 0, 0;
     -fx-background-radius: 2em;
+}
+
+.ButtonGameMenu {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0,0 0 6 0,0 0 6 0;
+    -fx-background-radius: 7;
+    -fx-background-color: linear-gradient(from 0% 95% to 0% 100%,#C9C9C9 0%,#C9C9C9 100%), #C9C9C9, #C9C9C9, radial-gradient(center 50% 50%, radius 100%,#19467E,#2B5588);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75),4,0,0,1);
+}
+.ButtonGameMenu:hover {
+        -fx-background-color: linear-gradient(from 0% 95% to 0% 100%,#C9C9C9 0%,#C9C9C9 100), #C9C9C9, #C9C9C9, radial-gradient(center 50% 50%,radius 100%,#15437C, #073874);
+    }
+.ButtonGameMenu:pressed {
+        -fx-padding: 10 15 13 15;
+        -fx-background-insets: 2 0 0 0,2 0 3 0,2 0 4 0,2 0 5 0;
 }

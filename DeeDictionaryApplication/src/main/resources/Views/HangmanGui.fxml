@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.QuadCurve?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="bgHangman" maxHeight="500.0" maxWidth="800.0" minHeight="500.0" minWidth="800.0" prefHeight="500.0" prefWidth="800.0" stylesheets="@../Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deedictionaryapplication.Controllers.HangmanGui">
+   <children>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#newGame" styleClass="item" stylesheets="@../Style.css" text="New game" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <FlowPane fx:id="keyboard" layoutX="51.0" layoutY="250.0" prefHeight="200.0" prefWidth="350.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="290.0">
+         <children>
+            <Button layoutX="151.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="A" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="186.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="B" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="C" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="45.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="D" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="80.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="E" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="116.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="F" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="151.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="G" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="186.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="H" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="221.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="I" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="256.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="J" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="256.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="K" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="292.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="L" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="327.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="M" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="362.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="N" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="10.0" layoutY="45.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="O" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="P" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="45.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="Q" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="80.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="R" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="116.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="S" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="151.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="T" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="186.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="U" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="221.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="V" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="292.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="W" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="327.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="X" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="362.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="Y" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="221.0" layoutY="45.0" mnemonicParsing="false" onAction="#onClick" prefHeight="38.0" prefWidth="38.0" styleClass="Button" stylesheets="@../Style.css" text="Z" textFill="WHITE">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </FlowPane>
+      <Text fx:id="text" fill="WHITE" layoutX="51.0" layoutY="174.221875" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="516.7999579906464" AnchorPane.bottomAnchor="317.0" AnchorPane.rightAnchor="260.0" AnchorPane.topAnchor="129.0">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="40.0" />
+         </font>
+      </Text>
+      <Text fx:id="winStatus" fill="WHITE" layoutX="476.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="191.9999687075615" AnchorPane.bottomAnchor="138.815625" AnchorPane.leftAnchor="476.0" AnchorPane.rightAnchor="132.0000312924385" AnchorPane.topAnchor="287.6875">
+         <font>
+            <Font name="Chiller" size="64.0" />
+         </font>
+      </Text>
+      <Text fx:id="realWord" fill="WHITE" layoutX="423.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="342.3999938964844">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="36.0" />
+         </font>
+      </Text>
+      <Line endX="-35.0" layoutX="640.0" layoutY="260.0" startX="-90.0" stroke="#4882c9" strokeWidth="8.0" AnchorPane.topAnchor="251.0" />
+      <Line endX="100.699951171875" endY="-11.79998779296875" layoutX="477.0" layoutY="267.0" startX="100.699951171875" startY="-210.4644775390625" stroke="#4882c9" strokeWidth="8.0" />
+      <Line endX="28.435546875" endY="-7.62939453125E-6" layoutX="678.0" layoutY="54.0" startX="-100.0" stroke="#4882c9" strokeWidth="8.0" />
+      <Line fx:id="turn1" endX="-45.56451416015625" endY="-20.599998474121094" layoutX="752.0" layoutY="99.0" startX="-45.56451416015625" startY="-41.00000762939453" stroke="#4882c9" strokeWidth="8.0" />
+      <Circle fx:id="turn2" fill="#4882c9" layoutX="707.0" layoutY="107.0" radius="24.0" stroke="BLACK" strokeType="INSIDE" AnchorPane.topAnchor="83.0" />
+      <Line fx:id="turn3" endX="-45.56451416015625" endY="27.399993896484375" fill="WHITE" layoutX="753.0" layoutY="164.0" startX="-46.0" startY="-32.79998779296875" stroke="#4882c9" strokeWidth="5.0" />
+      <Line fx:id="turn4" endX="-53.0" endY="-62.59998321533203" fill="WHITE" layoutX="731.0" layoutY="216.0" startX="6.5999755859375" startY="-62.5999755859375" stroke="#4882c9" strokeWidth="5.0" />
+      <Line fx:id="turn51" endX="-56.60003662109375" endY="-36.0" fill="WHITE" layoutX="730.0" layoutY="253.0" startX="-24.4000244140625" startY="-62.5999755859375" stroke="#4882c9" strokeWidth="5.0" />
+      <Line fx:id="turn52" endX="-21.79998779296875" endY="-13.199981689453125" fill="WHITE" layoutX="761.0" layoutY="229.0" startX="-51.0" startY="-38.0" stroke="#4882c9" strokeWidth="5.0" />
+      <Line endX="-57.79998779296875" endY="-39.46446990966797" layoutX="683.0" layoutY="97.0" startX="-102.800048828125" startY="0.5999984741210938" stroke="#4882c9" strokeWidth="8.0" />
+      <QuadCurve fx:id="mouth" controlX="-33.4000244140625" controlY="-8.199989318847656" endX="-21.4000244140625" endY="-7.62939453125E-6" fill="TRANSPARENT" layoutX="740.0" layoutY="123.0" startX="-45.4000244140625" startY="-7.62939453125E-6" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="eye1" fill="#0000004e" layoutX="697.0" layoutY="99.0" radius="3.0" smooth="false" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="eye2" fill="#0000004e" layoutX="717.0" layoutY="99.0" radius="3.0" smooth="false" stroke="BLACK" strokeType="INSIDE" />
+      <ImageView fx:id="loseIcon" fitHeight="56.0" fitWidth="48.0" layoutX="683.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Icons/sad.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="winIcon" fitHeight="87.0" fitWidth="97.0" layoutX="675.0" layoutY="282.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Icons/flame-brain-character-raising-its-arms-in-triumph.gif" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" layoutX="252.0" layoutY="12.0" prefHeight="35.0" prefWidth="140.0" text="Remaining" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="score" layoutX="401.0" layoutY="12.0" prefHeight="35.0" prefWidth="48.0" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="22.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="bgScramble" prefHeight="500.0" prefWidth="800.0" stylesheets="@../Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deedictionaryapplication.Controllers.ScrambleGui">
+    <children>
+        <VBox alignment="CENTER" layoutX="50.0" layoutY="50.0" spacing="10.0">
+            <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="Scramble Game" />
+            <HBox alignment="CENTER" spacing="10.0">
+                <Button fx:id="letter1" onAction="#handleLetterButtonClicked" text="T">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+                <Button fx:id="letter2" onAction="#handleLetterButtonClicked" text="R">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+                <Button fx:id="letter3" onAction="#handleLetterButtonClicked" text="I">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+                <Button fx:id="letter4" onAction="#handleLetterButtonClicked" text="E">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            </HBox>
+            <Label text="Selected Word:" />
+            <Label fx:id="wordLabel" style="-fx-border-color: black; -fx-padding: 5px;" />
+         <Button mnemonicParsing="false" onAction="#handleClearBtn" text="Clear" />
+            <Button onAction="#handleConfirmButtonClicked" text="Confirm" />
+            <Label text="Dictionary:" />
+            <TextArea fx:id="keyList" editable="false" prefHeight="100.0" prefWidth="200.0" wrapText="true">
+            <font>
+               <Font size="18.0" />
+            </font></TextArea>
+        </VBox>
+      <Label fx:id="falseAlert" layoutX="472.0" layoutY="93.0" text="Fail">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>

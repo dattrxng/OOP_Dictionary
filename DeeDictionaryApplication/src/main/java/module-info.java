@@ -7,6 +7,8 @@ module deedictionaryapplication.deedictionaryapplication {
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
+    requires jsapi;
+    requires javafx.media;
 
     opens deedictionaryapplication to javafx.fxml;
     exports deedictionaryapplication;

@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -339,6 +340,50 @@ public class DictionaryManagement {
         }).start();
     }
 
+    public ArrayList<String> getAllTargetWords() {
+        ArrayList<String> allWords = new ArrayList<>();
+
+        try {
+            String sqlQuery = "SELECT target FROM dictionary";
+            try (PreparedStatement ps = CONNECTION.prepareStatement(sqlQuery);
+                 ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String target = rs.getString("target");
+                    allWords.add(target);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error retrieving words from MySQL: " + e.getMessage());
+        }
+
+        return allWords;
+    }
+
+
+
+
+    public String getRandomAlphabeticWordBySize(ArrayList<String> words, int minLength, int maxLength) {
+        ArrayList<String> filteredWords = new ArrayList<>();
+
+        // Lọc các từ theo độ dài và chỉ chứa ký tự là chữ
+        for (String word : words) {
+            if (isAlphabetic(word) && word.length() >= minLength && word.length() <= maxLength) {
+                filteredWords.add(word);
+            }
+        }
+
+        if (filteredWords.isEmpty()) {
+            return null; // Trả về null nếu không có từ nào thỏa mãn điều kiện
+        }
+
+        int randomIndex = (int) (Math.random() * filteredWords.size());
+        return filteredWords.get(randomIndex).toUpperCase();
+    }
+
+    private boolean isAlphabetic(String word) {
+        // Kiểm tra xem từ có chứa chỉ ký tự là chữ cái hay không
+        return word.matches("[a-zA-Z]+");
+    }
     public void setTrie(Dictionary dictionary) {
         for (Word word : dictionary) {
             trie.insert(word.getWord_target());

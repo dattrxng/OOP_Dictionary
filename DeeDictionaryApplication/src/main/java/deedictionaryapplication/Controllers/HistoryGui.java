@@ -6,14 +6,9 @@ import deedictionaryapplication.DictionaryCommandline.DictionaryManagement;
 import deedictionaryapplication.DictionaryCommandline.TextToSpeech;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -31,29 +26,25 @@ public class HistoryGui implements Initializable {
     private Label notAvailableAlert;
     @FXML
     private Button cancelBtn;
-    private Alerts alerts = new Alerts();
+    private final Alerts alerts = new Alerts();
     ObservableList<String> list = FXCollections.observableArrayList();
-    private Dictionary history = new Dictionary(), dictionary = new Dictionary();
-    private DictionaryManagement dictionaryManagement = new DictionaryManagement();
+    private final Dictionary history = new Dictionary();
+    private final Dictionary dictionary = new Dictionary();
+    private final DictionaryManagement dictionaryManagement = new DictionaryManagement();
     private int indexOfSelectedWord;
     private int firstIndexOfListFound = 0;
-    private TextToSpeech speech = new TextToSpeech();
+    private final TextToSpeech speech = new TextToSpeech();
 
     private void setListDefault(int index) {
         list.clear();
         for (int i = history.size() - 1; i >= index; i--) list.add(history.get(i).getWord_target());
         listResults.setItems(list);
-        if (history.size() > 0) {
-            englishWord.setText(history.get(index).getWord_target());
-            explanation.setText(history.get(index).getWord_explain());
-        } else {
-            englishWord.setText(""); // Xóa văn bản nếu danh sách trống
-            explanation.setText("");
-        }
+        englishWord.setText("");
+        explanation.setText("");
     }
 
     private void refreshAfterDelete() {
-        for (int i = 0; i < history.size(); i++)
+        for (int i = 0; i < list.size(); i++)
             if (list.get(i).equals(englishWord.getText())) {
                 list.remove(i);
                 break;
@@ -77,7 +68,7 @@ public class HistoryGui implements Initializable {
             firstIndexOfListFound = dictionaryManagement.searchWord(history, list.get(0));
         }
     }
-    public void handleClickAWord(MouseEvent mouseEvent) {
+    public void handleClickAWord() {
         String selectedWord = (String) listResults.getSelectionModel().getSelectedItem();
         if (selectedWord != null) {
             indexOfSelectedWord = dictionaryManagement.searchWord(history, selectedWord);
@@ -88,51 +79,53 @@ public class HistoryGui implements Initializable {
         }
     }
 
-    public void handleClickSoundBtn(ActionEvent actionEvent) {
-        speech.speak(history.get(indexOfSelectedWord).getWord_target());
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //dictionaryManagement.getConnection();
         dictionaryManagement.getAllWordsInHistory(history);
         dictionaryManagement.setTrie(history);
         setListDefault(0);
 
-        searchTerm.setOnKeyTyped(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (searchTerm.getText().isEmpty()) {
-                    cancelBtn.setVisible(false);
-                    setListDefault(0);
-                } else {
-                    cancelBtn.setVisible(true);
-                    handleOnKeyTyped();
-                }
+        searchTerm.setOnKeyTyped(keyEvent -> {
+            if (searchTerm.getText().isEmpty()) {
+                cancelBtn.setVisible(false);
+                setListDefault(0);
+            } else {
+                cancelBtn.setVisible(true);
+                handleOnKeyTyped();
             }
         });
-        cancelBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                searchTerm.clear();
-                notAvailableAlert.setVisible(false);
-                cancelBtn.setVisible(false);
-                //setListDefault(0);
-            }
+        cancelBtn.setOnAction(event -> {
+            searchTerm.clear();
+            notAvailableAlert.setVisible(false);
+            cancelBtn.setVisible(false);
         });
         explanation.setEditable(false);
         cancelBtn.setVisible(false);
         notAvailableAlert.setVisible(false);
     }
 
-    public void handleClickDeleteBtn(ActionEvent actionEvent) {
-        Alert alertWarning = alerts.alertWarning("Xóa từ", "Bạn có chắc chắn muốn xóa từ này khỏi lịch sử?");
-        alertWarning.getButtonTypes().add(ButtonType.CANCEL);
-        Optional<ButtonType> option = alertWarning.showAndWait();
-        if (option.get() == ButtonType.OK) {
-            dictionaryManagement.deleteWordHistory(history, indexOfSelectedWord);
-            alerts.showAlertInfo("Xóa từ", "Xóa thành công!");
-            refreshAfterDelete();
+    public void handleClickSoundBtn() {
+        if (!englishWord.getText().isEmpty()) {
+            speech.speak(history.get(indexOfSelectedWord).getWord_target());
+        } else {
+            Alert alertWarning = alerts.alertWarning("Phát âm", "Bạn chưa chọn từ muốn phát âm!");
+            Optional<ButtonType> option = alertWarning.showAndWait();
+        }
+    }
+
+    public void handleClickDeleteBtn() {
+        if (!englishWord.getText().isEmpty()) {
+            Alert alertWarning = alerts.alertWarning("Xóa từ", "Bạn có chắc chắn muốn xóa từ này khỏi lịch sử?");
+            alertWarning.getButtonTypes().add(ButtonType.CANCEL);
+            Optional<ButtonType> option = alertWarning.showAndWait();
+            if (option.get() == ButtonType.OK) {
+                dictionaryManagement.deleteWordToHistory(history, indexOfSelectedWord);
+                alerts.showAlertInfo("Xóa từ", "Xóa thành công!");
+                refreshAfterDelete();
+            }
+        } else {
+            Alert alertWarning = alerts.alertWarning("Xóa từ", "Bạn chưa chọn từ muốn xóa!");
+            Optional<ButtonType> option = alertWarning.showAndWait();
         }
     }
 }

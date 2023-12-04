@@ -38,10 +38,12 @@ public class SearchGui implements Initializable {
     private Label headerList;
     @FXML
     private ListView<String> listResults;
-    private Alerts alerts = new Alerts();
-    private Dictionary dictionary = new Dictionary(), bookmark = new Dictionary(), history = new Dictionary();
-    private DictionaryManagement dictionaryManagement = new DictionaryManagement();
-    private TextToSpeech speech = new TextToSpeech();
+    private final Alerts alerts = new Alerts();
+    private final Dictionary dictionary = new Dictionary();
+    private final Dictionary bookmark = new Dictionary();
+    private final Dictionary history = new Dictionary();
+    private final DictionaryManagement dictionaryManagement = new DictionaryManagement();
+    private final TextToSpeech speech = new TextToSpeech();
 
     ObservableList<String> list = FXCollections.observableArrayList();
     private int indexOfSelectedWord;
@@ -63,9 +65,9 @@ public class SearchGui implements Initializable {
             }
         listResults.setItems(list);
         headerOfExplanation.setVisible(false);
-        explanation.setVisible(false);
         explanation.setText("");
         englishWord.setText("");
+        setListDefault(0);
     }
 
     @FXML
@@ -92,26 +94,20 @@ public class SearchGui implements Initializable {
         dictionaryManagement.setTrie(dictionary);
         setListDefault(0);
 
-        searchTerm.setOnKeyTyped(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (searchTerm.getText().isEmpty()) {
-                    cancelBtn.setVisible(false);
-                    setListDefault(0);
-                } else {
-                    cancelBtn.setVisible(true);
-                    handleOnKeyTyped();
-                }
-            }
-        });
-        cancelBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                searchTerm.clear();
-                notAvailableAlert.setVisible(false);
+        searchTerm.setOnKeyTyped(keyEvent -> {
+            if (searchTerm.getText().isEmpty()) {
                 cancelBtn.setVisible(false);
                 setListDefault(0);
+            } else {
+                cancelBtn.setVisible(true);
+                handleOnKeyTyped();
             }
+        });
+        cancelBtn.setOnAction(event -> {
+            searchTerm.clear();
+            notAvailableAlert.setVisible(false);
+            cancelBtn.setVisible(false);
+            setListDefault(0);
         });
 
         explanation.setEditable(false);
@@ -121,7 +117,7 @@ public class SearchGui implements Initializable {
     }
 
     @FXML
-    private void handleClickAWord(MouseEvent arg0) {
+    private void handleClickAWord() {
         String selectedWord = listResults.getSelectionModel().getSelectedItem();
         if (selectedWord != null) {
             indexOfSelectedWord = dictionaryManagement.searchWord(dictionary, selectedWord);
@@ -130,9 +126,9 @@ public class SearchGui implements Initializable {
             explanation.setText(dictionary.get(indexOfSelectedWord).getWord_explain());
             int indexOfWord = dictionaryManagement.searchWord(history, englishWord.getText());
             if (indexOfWord >= 0) {
-                dictionaryManagement.deleteWordHistory(history, indexOfWord);
+                dictionaryManagement.deleteWordToHistory(history, indexOfWord);
             }
-            dictionaryManagement.addWordInHistory(history, englishWord.getText(), explanation.getText());
+            dictionaryManagement.addWordToHistoryInSQL(history, englishWord.getText(), explanation.getText());
             headerOfExplanation.setVisible(true);
             explanation.setVisible(true);
             explanation.setEditable(false);
@@ -140,28 +136,44 @@ public class SearchGui implements Initializable {
         }
     }
 
-    public void handleClickSoundBtn(ActionEvent actionEvent) {
-        speech.speak(dictionary.get(indexOfSelectedWord).getWord_target());
-    }
-
-    public void handleClickDeleteBtn(ActionEvent actionEvent) {
-        Alert alertWarning = alerts.alertWarning("Xóa từ", "Bạn có chắc chắn muốn xóa từ này?");
-        alertWarning.getButtonTypes().add(ButtonType.CANCEL);
-        Optional<ButtonType> option = alertWarning.showAndWait();
-        if (option.get() == ButtonType.OK) {
-            dictionaryManagement.deleteWord(dictionary, indexOfSelectedWord);
-            dictionaryManagement.deleteWordFavourite(bookmark, indexOfSelectedWord);
-            refreshAfterDelete();
-            alerts.showAlertInfo("Xóa từ", "Xóa thành công!");
+    public void handleClickSoundBtn() {
+        if (!englishWord.getText().isEmpty()) {
+            speech.speak(dictionary.get(indexOfSelectedWord).getWord_target());
+        } else {
+            Alert alertWarning = alerts.alertWarning("Phát âm", "Bạn chưa chọn từ muốn phát âm!");
+            Optional<ButtonType> option = alertWarning.showAndWait();
         }
     }
 
-    public void handleClickEditBtn(ActionEvent actionEvent) {
-        explanation.setEditable(true);
-        saveBtn.setVisible(true);
+    public void handleClickDeleteBtn() {
+        if (!englishWord.getText().isEmpty()) {
+            Alert alertWarning = alerts.alertWarning("Xóa từ", "Bạn có chắc chắn muốn xóa từ này?");
+            alertWarning.getButtonTypes().add(ButtonType.CANCEL);
+            Optional<ButtonType> option = alertWarning.showAndWait();
+            if (option.get() == ButtonType.OK) {
+                dictionaryManagement.deleteWord(dictionary, indexOfSelectedWord);
+
+                refreshAfterDelete();
+                alerts.showAlertInfo("Xóa từ", "Xóa thành công!");
+            }
+        } else {
+            Alert alertWarning = alerts.alertWarning("Xóa từ", "Bạn chưa chọn từ muốn xóa!");
+            Optional<ButtonType> option = alertWarning.showAndWait();
+        }
+
     }
 
-    public void handleClickSaveBtn(ActionEvent actionEvent) {
+    public void handleClickEditBtn() {
+        if (!englishWord.getText().isEmpty()) {
+            explanation.setEditable(true);
+            saveBtn.setVisible(true);
+        } else {
+            Alert alertWarning = alerts.alertWarning("Chỉnh sửa từ", "Bạn chưa chọn từ muốn chỉnh sửa!");
+            Optional<ButtonType> option = alertWarning.showAndWait();
+        }
+    }
+
+    public void handleClickSaveBtn() {
         Alert alertConfirmation = alerts.alertConfirmation("Cập nhật", "Bạn có chắc chắn muốn cập nhật nghĩa của từ này?");
         Optional<ButtonType> option = alertConfirmation.showAndWait();
         if (option.get() == ButtonType.OK) {
@@ -172,21 +184,23 @@ public class SearchGui implements Initializable {
         explanation.setEditable(false);
     }
 
-    public void handleClickFavouriteBtn(ActionEvent actionEvent) {
+    public void handleClickFavouriteBtn() {
         Alert alertConfirmation = alerts.alertConfirmation("Đã lưu", "Bạn có chắc chắn muốn lưu từ này?");
         Optional<ButtonType> option = alertConfirmation.showAndWait();
         String newEnglishWord = englishWord.getText();
         String newMeaning = explanation.getText();
         int indexOfWord = dictionaryManagement.searchWord(bookmark, newEnglishWord);
-        if (indexOfWord >= 0) {
-            // Từ đã tồn tại trong danh sách yêu thích
-            Alert alertWarning = alerts.alertWarning("Đã lưu", "Từ này đã được lưu trước đó!");
-            Optional<ButtonType> option1 = alertWarning.showAndWait();
-        } else {
-            // Từ chưa tồn tại trong danh sách yêu thích
-            Word word = new Word(newEnglishWord, newMeaning);
-            dictionaryManagement.addWordInBookmark(bookmark, newEnglishWord, newMeaning);
-            alerts.showAlertInfo("Đã lưu", "Từ đã được lưu!");
+        if (option.get() == ButtonType.OK) {
+            if (indexOfWord >= 0) {
+                // Từ đã tồn tại trong danh sách yêu thích
+                Alert alertWarning = alerts.alertWarning("Đã lưu", "Từ này đã được lưu trước đó!");
+                alertWarning.showAndWait();
+            } else {
+                // Từ chưa tồn tại trong danh sách yêu thích
+                Word word = new Word(newEnglishWord, newMeaning);
+                dictionaryManagement.addWordToBookmarkInSQL(bookmark, newEnglishWord, newMeaning);
+                alerts.showAlertInfo("Đã lưu", "Từ đã được lưu!");
+            }
         }
     }
 

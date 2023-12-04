@@ -6,13 +6,9 @@ import deedictionaryapplication.DictionaryCommandline.DictionaryManagement;
 import deedictionaryapplication.DictionaryCommandline.TextToSpeech;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.Optional;
@@ -31,25 +27,21 @@ public class FavouriteGui implements Initializable {
     private TextField searchTerm;
     @FXML
     private Label notAvailableAlert;
-    private Alerts alerts = new Alerts();
-    private Dictionary bookmark = new Dictionary(), dictionary = new Dictionary();
+    private final Alerts alerts = new Alerts();
+    private final Dictionary bookmark = new Dictionary();
+    private final Dictionary dictionary = new Dictionary();
     ObservableList<String> list = FXCollections.observableArrayList();
-    private DictionaryManagement dictionaryManagement = new DictionaryManagement();
+    private final DictionaryManagement dictionaryManagement = new DictionaryManagement();
     private int indexOfSelectedWord;
     private int firstIndexOfListFound = 0;
-    private TextToSpeech speech = new TextToSpeech();
+    private final TextToSpeech speech = new TextToSpeech();
 
     private void setListDefault(int index) {
         list.clear();
         for (int i = bookmark.size() - 1; i >= index; i--) list.add(bookmark.get(i).getWord_target());
         listResults.setItems(list);
-        if (bookmark.size() > 0) {
-            englishWord.setText(bookmark.get(index).getWord_target());
-            explanation.setText(bookmark.get(index).getWord_explain());
-        } else {
-            englishWord.setText(""); // Xóa văn bản nếu danh sách trống
-            explanation.setText("");
-        }
+        englishWord.setText("");
+        explanation.setText("");
     }
 
     private void refreshAfterDelete() {
@@ -59,7 +51,6 @@ public class FavouriteGui implements Initializable {
                 break;
             }
         listResults.setItems(list);
-        setListDefault(0);
         explanation.setText("");
         englishWord.setText("");
     }
@@ -86,26 +77,20 @@ public class FavouriteGui implements Initializable {
         dictionaryManagement.setTrie(bookmark);
         setListDefault(0);
 
-        searchTerm.setOnKeyTyped(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (searchTerm.getText().isEmpty()) {
-                    cancelBtn.setVisible(false);
-                    setListDefault(0);
-                } else {
-                    cancelBtn.setVisible(true);
-                    handleOnKeyTyped();
-                }
+        searchTerm.setOnKeyTyped(keyEvent -> {
+            if (searchTerm.getText().isEmpty()) {
+                cancelBtn.setVisible(false);
+                setListDefault(0);
+            } else {
+                cancelBtn.setVisible(true);
+                handleOnKeyTyped();
             }
         });
-        cancelBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                searchTerm.clear();
-                notAvailableAlert.setVisible(false);
-                cancelBtn.setVisible(false);
-                //setListDefault(0);
-            }
+        cancelBtn.setOnAction(event -> {
+            searchTerm.clear();
+            notAvailableAlert.setVisible(false);
+            cancelBtn.setVisible(false);
+            setListDefault(0);
         });
         explanation.setEditable(false);
         cancelBtn.setVisible(false);
@@ -114,7 +99,7 @@ public class FavouriteGui implements Initializable {
     }
 
     @FXML
-    private void handleClickAWord(MouseEvent arg0) {
+    private void handleClickAWord() {
         String selectedWord = (String) listResults.getSelectionModel().getSelectedItem();
         if (selectedWord != null) {
             indexOfSelectedWord = dictionaryManagement.searchWord(bookmark, selectedWord);
@@ -127,27 +112,42 @@ public class FavouriteGui implements Initializable {
         }
     }
 
-    public void handleClickSoundBtn(ActionEvent actionEvent) {
-        speech.speak(bookmark.get(indexOfSelectedWord).getWord_target());
-    }
-
-    public void handleClickEditBtn(ActionEvent actionEvent) {
-        explanation.setEditable(true);
-        saveBtn.setVisible(true);
-    }
-
-    public void handleClickFavouriteBtn(ActionEvent actionEvent) {
-        Alert alertWarning = alerts.alertWarning("Xóa từ", "Bạn có chắc chắn muốn xóa từ này khỏi danh sách đã lưu?");
-        alertWarning.getButtonTypes().add(ButtonType.CANCEL);
-        Optional<ButtonType> option = alertWarning.showAndWait();
-        if (option.get() == ButtonType.OK) {
-            dictionaryManagement.deleteWordFavourite(bookmark, indexOfSelectedWord);
-            refreshAfterDelete();
-            alerts.showAlertInfo("Xóa từ", "Xóa thành công!");
+    public void handleClickSoundBtn() {
+        if (!englishWord.getText().isEmpty()) {
+            speech.speak(bookmark.get(indexOfSelectedWord).getWord_target());
+        } else {
+            Alert alertWarning = alerts.alertWarning("Phát âm", "Bạn chưa chọn từ muốn phát âm!");
+            Optional<ButtonType> option = alertWarning.showAndWait();
         }
     }
 
-    public void handleClickSaveBtn(ActionEvent actionEvent) {
+    public void handleClickEditBtn() {
+        if (!englishWord.getText().isEmpty()) {
+            explanation.setEditable(true);
+            saveBtn.setVisible(true);
+        } else {
+            Alert alertWarning = alerts.alertWarning("Chỉnh sửa từ", "Bạn chưa chọn từ muốn chỉnh sửa!");
+            Optional<ButtonType> option = alertWarning.showAndWait();
+        }
+    }
+
+    public void handleClickFavouriteBtn() {
+        if (!englishWord.getText().isEmpty()) {
+            Alert alertWarning = alerts.alertWarning("Xóa từ", "Bạn có chắc chắn muốn xóa từ này khỏi danh sách đã lưu?");
+            alertWarning.getButtonTypes().add(ButtonType.CANCEL);
+            Optional<ButtonType> option = alertWarning.showAndWait();
+            if (option.get() == ButtonType.OK) {
+                dictionaryManagement.deleteWordToBookmark(bookmark, indexOfSelectedWord);
+                refreshAfterDelete();
+                alerts.showAlertInfo("Xóa từ", "Xóa thành công!");
+            }
+        } else {
+            Alert alertWarning = alerts.alertWarning("Xóa từ", "Bạn chưa chọn từ muốn xóa!");
+            Optional<ButtonType> option = alertWarning.showAndWait();
+        }
+    }
+
+    public void handleClickSaveBtn() {
         Alert alertConfirmation = alerts.alertConfirmation("Cập nhật", "Bạn có chắc chắn muốn cập nhật nghĩa của từ này?");
         Optional<ButtonType> option = alertConfirmation.showAndWait();
         if (option.get() == ButtonType.OK) {

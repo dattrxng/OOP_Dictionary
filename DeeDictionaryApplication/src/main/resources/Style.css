@@ -10,12 +10,7 @@
     -fx-background-size: 800 500;
     -fx-background-position: center center;
 }
-#bgScramble {
-    -fx-background-image: url("Icons/ice.jpg");
-    -fx-background-repeat: stretch;
-    -fx-background-size: 800 500;
-    -fx-background-position: center center;
-}
+
 .sideBar {
     -fx-background-insets: 0;
     -fx-background-color: TRANSPARENT;

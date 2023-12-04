@@ -115,7 +115,7 @@ public class HangmanGui {
                 winStatus.setText("You Win!");
                 winIcon.setVisible(true);
                 keyboard.setDisable(true);
-                playAudio("D:\\OOP (by Java)\\DeeDictionaryApplication\\src\\main\\resources\\y2meta.com - WIN sound effect no copyright (320 kbps).mp3");
+                playAudio("C:\\Users\\ACER\\Documents\\GitHub\\BTL\\DeeDictionaryApplication\\src\\main\\resources\\Sound\\y2meta.com - WIN sound effect no copyright (320 kbps).mp3");
             }
         } else {
             mistakes++;
@@ -136,7 +136,7 @@ public class HangmanGui {
                 loseIcon.setVisible(true);
                 realWord.setText(myWord);
                 keyboard.setDisable(true);
-                playAudio("D:\\OOP (by Java)\\DeeDictionaryApplication\\src\\main\\resources\\y2meta.com - Victory Sound Effect (320 kbps).mp3");
+                playAudio("C:\\Users\\ACER\\Documents\\GitHub\\BTL\\DeeDictionaryApplication\\src\\main\\resources\\Sound\\y2meta.com - Victory Sound Effect (320 kbps).mp3");
             }
         }
         correct = correctCount[0];

@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -149,6 +150,7 @@ public class DictionaryManagement {
         try {
             Word deletedWord = dictionary.remove(index);
             deleteWordInSQL(deletedWord);
+            removeWordFromTrie(deletedWord.getWord_target());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -200,7 +202,7 @@ public class DictionaryManagement {
         }
     }
 
-    public void addWordInBookmark(Dictionary bookmark, String target, String meaning) {
+    public void addWordToBookmarkInSQL(Dictionary bookmark, String target, String meaning) {
         try {
             String querySQL = "INSERT INTO bookmark (target, definition) VALUES (?, ?)";
             PreparedStatement preparedStatement = CONNECTION.prepareStatement(querySQL);
@@ -230,6 +232,7 @@ public class DictionaryManagement {
             throw new RuntimeException(e);
         }
     }
+
     public void getAllWordsInBookmark(Dictionary bookmark) {
         final String SQLQuery = "SELECT * FROM bookmark";
         try (PreparedStatement ps = CONNECTION.prepareStatement(SQLQuery);
@@ -242,10 +245,11 @@ public class DictionaryManagement {
         }
     }
 
-    public void deleteWordFavourite(Dictionary bookmark, int index) {
+    public void deleteWordToBookmark(Dictionary bookmark, int index) {
         try {
             Word deletedWord = bookmark.remove(index);
             deleteWordInBookmark(deletedWord);
+            removeWordFromTrie(deletedWord.getWord_target());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -275,10 +279,11 @@ public class DictionaryManagement {
         }
     }
 
-    public void deleteWordHistory(Dictionary history, int index) {
+    public void deleteWordToHistory(Dictionary history, int index) {
         try {
             Word deletedWord = history.remove(index);
             deleteWordInHistory(deletedWord);
+            removeWordFromTrie(deletedWord.getWord_target());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -308,7 +313,7 @@ public class DictionaryManagement {
         }
     }
 
-    public void addWordInHistory(Dictionary history, String target, String meaning) {
+    public void addWordToHistoryInSQL(Dictionary history, String target, String meaning) {
         try {
             // Thêm từ mới vào cơ sở dữ liệu
             String insertSQL = "INSERT INTO history (target, definition) VALUES (?, ?)";
@@ -360,8 +365,6 @@ public class DictionaryManagement {
     }
 
 
-
-
     public String getRandomAlphabeticWordBySize(ArrayList<String> words, int minLength, int maxLength) {
         ArrayList<String> filteredWords = new ArrayList<>();
 
@@ -384,7 +387,26 @@ public class DictionaryManagement {
         // Kiểm tra xem từ có chứa chỉ ký tự là chữ cái hay không
         return word.matches("[a-zA-Z]+");
     }
-    public void setTrie(Dictionary dictionary) {
+
+    public String shuffleWord(String word) {
+        List<Character> characters = new ArrayList<>();
+        for (char c : word.toCharArray()) {
+            characters.add(c);
+        }
+
+        Collections.shuffle(characters);
+
+        StringBuilder shuffledWord = new StringBuilder();
+        for (char c : characters) {
+            shuffledWord.append(c);
+        }
+
+        return shuffledWord.toString();
+    }
+    public void removeWordFromTrie(String target) {
+        trie.delete(target);
+    }
+        public void setTrie(Dictionary dictionary) {
         for (Word word : dictionary) {
             trie.insert(word.getWord_target());
         }

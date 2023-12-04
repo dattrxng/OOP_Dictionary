@@ -27,30 +27,24 @@ public class TranslateGui implements Initializable {
     private TextArea sourceLangField, toLangField;
     private static final String CLIENT_ID = "FREE_TRIAL_ACCOUNT";
     private static final String CLIENT_SECRET = "PUBLIC_SECRET";
-    private static final String ENDPOINT = "http://api.whatsmate.net/v1/translation/translate";
+    private static final String ENDPOINT = "https://api.whatsmate.net/v1/translation/translate";
     private String sourceLanguage = "en";
     private String toLanguage = "vi";
     private boolean isToVietnameseLang = true;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        translateBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                try {
-                    handleOnClickTranslatebtn();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        translateBtn.setOnAction(actionEvent -> {
+            try {
+                handleOnClickTranslatebtn();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
 
-        sourceLangField.setOnKeyTyped(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (sourceLangField.getText().trim().isEmpty()) translateBtn.setDisable(true);
-                else translateBtn.setDisable(false);
-            }
+        sourceLangField.setOnKeyTyped(keyEvent -> {
+            if (sourceLangField.getText().trim().isEmpty()) translateBtn.setDisable(true);
+            else translateBtn.setDisable(false);
         });
 
         translateBtn.setDisable(true);
@@ -97,7 +91,7 @@ public class TranslateGui implements Initializable {
         conn.disconnect();
     }
 
-    public void handleOnClickSwitchToggle(ActionEvent actionEvent) {
+    public void handleOnClickSwitchToggle() {
         sourceLangField.clear();
         toLangField.clear();
         if (!isToVietnameseLang) {

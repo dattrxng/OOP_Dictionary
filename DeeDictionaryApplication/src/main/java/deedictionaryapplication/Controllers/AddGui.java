@@ -27,7 +27,6 @@ public class AddGui implements Initializable {
     private final Dictionary dictionary = new Dictionary();
     private final DictionaryManagement dictionaryManagement = new DictionaryManagement();
     private final Alerts alerts = new Alerts();
-    private final String DB_URL = "jdbc:mysql://localhost:3307/deedictionary";
 
     public void resetField() {
         newWord.setText("");
@@ -39,7 +38,7 @@ public class AddGui implements Initializable {
         dictionaryManagement.setTimeout(() -> successAlert.setVisible(false), 1500);
     }
 
-    public void handleClickAddBtn(ActionEvent actionEvent) {
+    public void handleClickAddBtn() {
         Alert alertConfirmation = alerts.alertConfirmation("Thêm từ", "Bạn có chắc chắn muốn thêm từ này?");
         Optional<ButtonType> option = alertConfirmation.showAndWait();
         String newEnglishWord = newWord.getText().trim();
@@ -64,10 +63,7 @@ public class AddGui implements Initializable {
             addBtn.setDisable(true);
             resetField();
         }
-
     }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -75,20 +71,14 @@ public class AddGui implements Initializable {
         dictionaryManagement.getAllWords(dictionary);
         if (newExplaination.getText().isEmpty() || newWord.getText().isEmpty()) addBtn.setDisable(true);
 
-        newWord.setOnKeyTyped(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (newExplaination.getText().isEmpty() || newWord.getText().isEmpty()) addBtn.setDisable(true);
-                else addBtn.setDisable(false);
-            }
+        newWord.setOnKeyTyped(keyEvent -> {
+            if (newExplaination.getText().isEmpty() || newWord.getText().isEmpty()) addBtn.setDisable(true);
+            else addBtn.setDisable(false);
         });
 
-        newExplaination.setOnKeyTyped(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (newExplaination.getText().isEmpty() || newWord.getText().isEmpty()) addBtn.setDisable(true);
-                else addBtn.setDisable(false);
-            }
+        newExplaination.setOnKeyTyped(keyEvent -> {
+            if (newExplaination.getText().isEmpty() || newWord.getText().isEmpty()) addBtn.setDisable(true);
+            else addBtn.setDisable(false);
         });
 
         successAlert.setVisible(false);

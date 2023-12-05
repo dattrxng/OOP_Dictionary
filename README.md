@@ -27,4 +27,5 @@ Bài tập lớn - Từ điển (UET OASIS - I2324INT2204 22 - Lập trình hư�
     - Main class: deedictionaryapplication.Main
     - Name: Dee Dictionary
 ## Preivew
-![Dee Dictionary - Home](http://drive.google.com/file/d/1M_TlgCNTVPRSxKJabOOanP3kBK5c_KTj/view)
+![Home](https://github.com/dattrxng/BTL_OOP_Dictionary/assets/124912657/8a7c9251-c06f-4b9d-8c3f-7a90c2c5f4ec)
+

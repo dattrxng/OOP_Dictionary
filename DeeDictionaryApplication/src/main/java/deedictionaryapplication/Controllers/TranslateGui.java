@@ -1,15 +1,11 @@
 package deedictionaryapplication.Controllers;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import deedictionaryapplication.DictionaryCommandline.TextToSpeech;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -31,6 +27,9 @@ public class TranslateGui implements Initializable {
     private String sourceLanguage = "en";
     private String toLanguage = "vi";
     private boolean isToVietnameseLang = true;
+    private final TextToSpeech speech = new TextToSpeech();
+    private String output;
+    private String input;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -43,29 +42,29 @@ public class TranslateGui implements Initializable {
         });
 
         sourceLangField.setOnKeyTyped(keyEvent -> {
+            this.input = sourceLangField.getText().trim();
             if (sourceLangField.getText().trim().isEmpty()) translateBtn.setDisable(true);
             else translateBtn.setDisable(false);
         });
-
         translateBtn.setDisable(true);
         toLangField.setEditable(false);
     }
 
     @FXML
     private void handleOnClickTranslatebtn() throws IOException {
-        String jsonPayload = new StringBuilder()
-                .append("{")
-                .append("\"fromLang\":\"")
-                .append(sourceLanguage)
-                .append("\",")
-                .append("\"toLang\":\"")
-                .append(toLanguage)
-                .append("\",")
-                .append("\"text\":\"")
-                .append(sourceLangField.getText())
-                .append("\"")
-                .append("}")
-                .toString();
+        this.input = sourceLangField.getText().trim();
+        System.out.println(input);
+        String jsonPayload = "{" +
+                "\"fromLang\":\"" +
+                sourceLanguage +
+                "\"," +
+                "\"toLang\":\"" +
+                toLanguage +
+                "\"," +
+                "\"text\":\"" +
+                sourceLangField.getText() +
+                "\"" +
+                "}";
 
         URL url = new URL(ENDPOINT);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -87,6 +86,7 @@ public class TranslateGui implements Initializable {
         String output;
         while ((output = br.readLine()) != null) {
             toLangField.setText(output);
+            this.output = output;
         }
         conn.disconnect();
     }

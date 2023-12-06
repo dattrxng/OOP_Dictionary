@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="450.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deedictionaryapplication.Controllers.AddGui">
+<AnchorPane prefHeight="450.0" prefWidth="750.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deedictionaryapplication.Controllers.AddGui">
    <children>
       <Label layoutX="13.0" layoutY="35.0" prefHeight="31.0" prefWidth="311.0" styleClass="title" stylesheets="@../Style.css" text="Từ" textFill="WHITE" AnchorPane.bottomAnchor="465.79999999999995" AnchorPane.topAnchor="35.0">
          <font>
@@ -33,7 +33,7 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </TextField>
-      <TextArea fx:id="newExplaination" layoutX="341.0" layoutY="81.0" prefHeight="262.0" prefWidth="363.0" promptText="Nhập giải nghĩa của từ ..." styleClass="add-box" stylesheets="@../Style.css" AnchorPane.leftAnchor="341.0" AnchorPane.rightAnchor="46.0" AnchorPane.topAnchor="81.0">
+      <TextArea fx:id="newExplaination" layoutX="341.0" layoutY="81.0" prefHeight="262.0" prefWidth="363.0" promptText="Nhập giải nghĩa của từ ..." styleClass="add-box" stylesheets="@../Style.css" wrapText="true" AnchorPane.leftAnchor="341.0" AnchorPane.rightAnchor="46.0" AnchorPane.topAnchor="81.0">
          <font>
             <Font size="16.0" />
          </font>
@@ -46,7 +46,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label fx:id="successAlert" alignment="CENTER" layoutX="350.0" layoutY="361.0" prefHeight="30.0" prefWidth="272.0" style="-fx-background-color: #c9f7c4; -fx-background-radius: 5;" text="Thành công" textFill="#376931" AnchorPane.bottomAnchor="140.0" AnchorPane.topAnchor="361.0">
+      <Label fx:id="successAlert" alignment="CENTER" layoutX="350.0" layoutY="361.0" prefHeight="30.0" prefWidth="272.0" style="-fx-background-color: #c9f7c4; -fx-background-radius: 5; -fx-background-radius: 10;" text="Thành công" textFill="#376931" AnchorPane.bottomAnchor="140.0" AnchorPane.topAnchor="361.0">
          <font>
             <Font size="14.0" />
          </font>

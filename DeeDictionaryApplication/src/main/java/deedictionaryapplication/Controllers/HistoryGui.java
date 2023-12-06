@@ -13,7 +13,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class HistoryGui implements Initializable {
+public class HistoryGui implements Initializable, BaseGui {
     @FXML
     private ListView listResults;
     @FXML
@@ -29,13 +29,13 @@ public class HistoryGui implements Initializable {
     private final Alerts alerts = new Alerts();
     ObservableList<String> list = FXCollections.observableArrayList();
     private final Dictionary history = new Dictionary();
-    private final Dictionary dictionary = new Dictionary();
     private final DictionaryManagement dictionaryManagement = new DictionaryManagement();
     private int indexOfSelectedWord;
     private int firstIndexOfListFound = 0;
     private final TextToSpeech speech = new TextToSpeech();
 
-    private void setListDefault(int index) {
+    @Override
+    public void setListDefault(int index) {
         list.clear();
         for (int i = history.size() - 1; i >= index; i--) list.add(history.get(i).getWord_target());
         listResults.setItems(list);
@@ -43,7 +43,8 @@ public class HistoryGui implements Initializable {
         explanation.setText("");
     }
 
-    private void refreshAfterDelete() {
+    @Override
+    public void refreshAfterDelete() {
         for (int i = 0; i < list.size(); i++)
             if (list.get(i).equals(englishWord.getText())) {
                 list.remove(i);
@@ -54,8 +55,9 @@ public class HistoryGui implements Initializable {
         englishWord.setText("");
     }
 
+    @Override
     @FXML
-    private void handleOnKeyTyped() {
+    public void handleOnKeyTyped() {
         list.clear();
         String searchKey = searchTerm.getText().trim();
         list = dictionaryManagement.lookupWord(history, searchKey);
@@ -68,6 +70,8 @@ public class HistoryGui implements Initializable {
             firstIndexOfListFound = dictionaryManagement.searchWord(history, list.get(0));
         }
     }
+
+    @Override
     public void handleClickAWord() {
         String selectedWord = (String) listResults.getSelectionModel().getSelectedItem();
         if (selectedWord != null) {
@@ -104,6 +108,7 @@ public class HistoryGui implements Initializable {
         notAvailableAlert.setVisible(false);
     }
 
+    @Override
     public void handleClickSoundBtn() {
         if (!englishWord.getText().isEmpty()) {
             speech.speak(history.get(indexOfSelectedWord).getWord_target());
@@ -113,6 +118,7 @@ public class HistoryGui implements Initializable {
         }
     }
 
+    @Override
     public void handleClickDeleteBtn() {
         if (!englishWord.getText().isEmpty()) {
             Alert alertWarning = alerts.alertWarning("Xóa từ", "Bạn có chắc chắn muốn xóa từ này khỏi lịch sử?");

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="450.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deedictionaryapplication.Controllers.FavouriteGui">
+<AnchorPane prefHeight="450.0" prefWidth="750.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deedictionaryapplication.Controllers.FavouriteGui">
    <children>
       <AnchorPane layoutY="105.0" prefHeight="346.0" prefWidth="229.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="521.0">
          <children>
@@ -22,9 +22,9 @@
                   <Font name="System Bold Italic" size="17.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="23.0" fitWidth="23.0" layoutX="2.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Icons/star.png" />
+                        <Image url="@../Icons/icons8-star-50.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -52,7 +52,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button layoutX="378.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleClickFavouriteBtn" prefHeight="35.0" prefWidth="35.0" styleClass="item" stylesheets="@../Style.css">
+                  <Button layoutX="378.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleClickDeleteBtn" prefHeight="35.0" prefWidth="35.0" styleClass="item" stylesheets="@../Style.css">
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -78,7 +78,7 @@
                   </Button>
                </children>
             </Pane>
-            <TextArea fx:id="explanation" layoutY="86.0" prefHeight="251.0" prefWidth="450.0" styleClass="explanation" stylesheets="@../Style.css" text="Từ">
+            <TextArea fx:id="explanation" layoutY="86.0" prefHeight="251.0" prefWidth="450.0" styleClass="explanation" stylesheets="@../Style.css" text="Từ" wrapText="true">
                <font>
                   <Font size="18.0" />
                </font>

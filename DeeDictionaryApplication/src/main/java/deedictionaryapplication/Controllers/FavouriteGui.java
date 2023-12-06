@@ -9,12 +9,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class FavouriteGui implements Initializable {
+public class FavouriteGui implements Initializable, BaseGui {
     @FXML
     private ListView listResults;
     @FXML
@@ -36,7 +35,8 @@ public class FavouriteGui implements Initializable {
     private int firstIndexOfListFound = 0;
     private final TextToSpeech speech = new TextToSpeech();
 
-    private void setListDefault(int index) {
+    @Override
+    public void setListDefault(int index) {
         list.clear();
         for (int i = bookmark.size() - 1; i >= index; i--) list.add(bookmark.get(i).getWord_target());
         listResults.setItems(list);
@@ -44,7 +44,8 @@ public class FavouriteGui implements Initializable {
         explanation.setText("");
     }
 
-    private void refreshAfterDelete() {
+    @Override
+    public void refreshAfterDelete() {
         for (int i = 0; i < list.size(); i++)
             if (list.get(i).equals(englishWord.getText())) {
                 list.remove(i);
@@ -55,8 +56,9 @@ public class FavouriteGui implements Initializable {
         englishWord.setText("");
     }
 
+    @Override
     @FXML
-    private void handleOnKeyTyped() {
+    public void handleOnKeyTyped() {
         list.clear();
         String searchKey = searchTerm.getText().trim();
         list = dictionaryManagement.lookupWord(bookmark, searchKey);
@@ -71,8 +73,22 @@ public class FavouriteGui implements Initializable {
     }
 
     @Override
+    @FXML
+    public void handleClickAWord() {
+        String selectedWord = (String) listResults.getSelectionModel().getSelectedItem();
+        if (selectedWord != null) {
+            indexOfSelectedWord = dictionaryManagement.searchWord(bookmark, selectedWord);
+            if (indexOfSelectedWord == -1) return;
+            englishWord.setText(bookmark.get(indexOfSelectedWord).getWord_target());
+            explanation.setText(bookmark.get(indexOfSelectedWord).getWord_explain());
+            explanation.setVisible(true);
+            explanation.setEditable(false);
+            saveBtn.setVisible(false);
+        }
+    }
+
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //dictionaryManagement.getConnection();
         dictionaryManagement.getAllWordsInBookmark(bookmark);
         dictionaryManagement.setTrie(bookmark);
         setListDefault(0);
@@ -98,20 +114,7 @@ public class FavouriteGui implements Initializable {
         notAvailableAlert.setVisible(false);
     }
 
-    @FXML
-    private void handleClickAWord() {
-        String selectedWord = (String) listResults.getSelectionModel().getSelectedItem();
-        if (selectedWord != null) {
-            indexOfSelectedWord = dictionaryManagement.searchWord(bookmark, selectedWord);
-            if (indexOfSelectedWord == -1) return;
-            englishWord.setText(bookmark.get(indexOfSelectedWord).getWord_target());
-            explanation.setText(bookmark.get(indexOfSelectedWord).getWord_explain());
-            explanation.setVisible(true);
-            explanation.setEditable(false);
-            saveBtn.setVisible(false);
-        }
-    }
-
+    @Override
     public void handleClickSoundBtn() {
         if (!englishWord.getText().isEmpty()) {
             speech.speak(bookmark.get(indexOfSelectedWord).getWord_target());
@@ -131,7 +134,8 @@ public class FavouriteGui implements Initializable {
         }
     }
 
-    public void handleClickFavouriteBtn() {
+    @Override
+    public void handleClickDeleteBtn() {
         if (!englishWord.getText().isEmpty()) {
             Alert alertWarning = alerts.alertWarning("Xóa từ", "Bạn có chắc chắn muốn xóa từ này khỏi danh sách đã lưu?");
             alertWarning.getButtonTypes().add(ButtonType.CANCEL);

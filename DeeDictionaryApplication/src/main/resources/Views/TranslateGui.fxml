@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="450.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deedictionaryapplication.Controllers.TranslateGui">
+<AnchorPane prefHeight="450.0" prefWidth="750.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deedictionaryapplication.Controllers.TranslateGui">
    <children>
       <Pane layoutX="17.0" layoutY="12.0" prefHeight="431.0" prefWidth="723.0" stylesheets="@../Style.css" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="12.0">
          <children>
@@ -51,15 +51,15 @@
                   </Button>
                </children>
             </Pane>
-            <TextArea fx:id="sourceLangField" layoutX="9.0" layoutY="71.0" prefHeight="260.0" prefWidth="332.0" promptText="Type ..." styleClass="speech-field" stylesheets="@../Style.css">
+            <TextArea fx:id="sourceLangField" layoutX="9.0" layoutY="71.0" prefHeight="274.0" prefWidth="332.0" promptText="Type ..." styleClass="speech-field" stylesheets="@../Style.css" wrapText="true">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font></TextArea>
-            <TextArea fx:id="toLangField" layoutX="341.0" layoutY="71.0" prefHeight="260.0" prefWidth="332.0" styleClass="speech-field" stylesheets="@../Style.css">
+            <TextArea fx:id="toLangField" layoutX="341.0" layoutY="71.0" prefHeight="274.0" prefWidth="332.0" styleClass="speech-field" stylesheets="@../Style.css" wrapText="true">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font></TextArea>
-            <Button fx:id="translateBtn" alignment="CENTER" layoutX="296.0" layoutY="350.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="20.0" prefWidth="90.0" styleClass="Button" stylesheets="@../Style.css" text="Dịch" textFill="WHITE">
+            <Button fx:id="translateBtn" alignment="CENTER" layoutX="296.0" layoutY="363.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="20.0" prefWidth="84.0" styleClass="Button" stylesheets="@../Style.css" text="Dịch" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

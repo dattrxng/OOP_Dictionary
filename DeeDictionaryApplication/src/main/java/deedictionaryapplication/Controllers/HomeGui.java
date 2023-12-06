@@ -32,10 +32,10 @@ public class HomeGui implements Initializable {
     private BorderPane mainPane;
     @FXML
     private VBox vbox;
-    @FXML
-    boolean vboxVisible = true;
-    private DictionaryManagement dictionaryManagement = new DictionaryManagement();
-    private Dictionary dictionary, bookmark, history = new Dictionary();
+    private boolean vboxVisible = true;
+    private final DictionaryManagement dictionaryManagement = new DictionaryManagement();
+    private Dictionary dictionary, bookmark;
+    private final Dictionary history = new Dictionary();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -66,7 +66,6 @@ public class HomeGui implements Initializable {
         }
         display.getStyleClass().add("active");
     }
-
     private void handleMenuButtonClick(Pane view, ToggleButton menuButton) {
         mainPane.setCenter(view);
         vbox.setVisible(true);

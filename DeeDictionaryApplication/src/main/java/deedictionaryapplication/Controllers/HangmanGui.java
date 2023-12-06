@@ -81,7 +81,7 @@ public class HangmanGui {
             } else if (result.get() == hard) {
                 myWord = dictionaryManagement.getRandomAlphabeticWordBySize(words, 9, 13);
             }
-
+            System.out.println(myWord);
             myLetters = Arrays.asList(myWord.split(""));
             answer = Arrays.asList(new String[myLetters.size() * 2]);
             for (int i = 0; i < myLetters.size() * 2; i++) {
@@ -115,7 +115,7 @@ public class HangmanGui {
                 winStatus.setText("You Win!");
                 winIcon.setVisible(true);
                 keyboard.setDisable(true);
-                playAudio("C:\\Users\\ACER\\Documents\\GitHub\\BTL\\DeeDictionaryApplication\\src\\main\\resources\\Sound\\y2meta.com - WIN sound effect no copyright (320 kbps).mp3");
+                playAudio("D:\\OOP (by Java)\\DeeDictionaryApplication\\src\\main\\resources\\Sound\\win.mp3");
             }
         } else {
             mistakes++;
@@ -136,7 +136,7 @@ public class HangmanGui {
                 loseIcon.setVisible(true);
                 realWord.setText(myWord);
                 keyboard.setDisable(true);
-                playAudio("C:\\Users\\ACER\\Documents\\GitHub\\BTL\\DeeDictionaryApplication\\src\\main\\resources\\Sound\\y2meta.com - Victory Sound Effect (320 kbps).mp3");
+                playAudio("D:\\OOP (by Java)\\DeeDictionaryApplication\\src\\main\\resources\\Sound\\lose.mp3");
             }
         }
         correct = correctCount[0];

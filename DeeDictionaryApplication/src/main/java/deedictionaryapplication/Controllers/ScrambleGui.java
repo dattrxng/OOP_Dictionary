@@ -68,7 +68,7 @@ public class ScrambleGui {
         submit.setVisible(false);
         answer.setEditable(false);
         successAlert.setVisible(true);
-        playAudio("C:\\Users\\ACER\\Documents\\GitHub\\BTL\\DeeDictionaryApplication\\src\\main\\resources\\Sound\\correct.mp3");
+        playAudio("D:\\OOP (by Java)\\DeeDictionaryApplication\\src\\main\\resources\\Sound\\correct.mp3");
     }
 
     private void showIncorrect() {
@@ -83,7 +83,7 @@ public class ScrambleGui {
         next.setLayoutX(350);
         next.setLayoutY(350);
         loseImg.setVisible(true);
-        playAudio("C:\\Users\\ACER\\Documents\\GitHub\\BTL\\DeeDictionaryApplication\\src\\main\\resources\\Sound\\lose.mp3");
+        playAudio("D:\\OOP (by Java)\\DeeDictionaryApplication\\src\\main\\resources\\Sound\\lose.mp3");
     }
 
     private void showEnd() {
@@ -95,7 +95,7 @@ public class ScrambleGui {
         next.setLayoutX(350);
         next.setLayoutY(350);
         winImg.setVisible(true);
-        playAudio("C:\\Users\\ACER\\Documents\\GitHub\\BTL\\DeeDictionaryApplication\\src\\main\\resources\\Sound\\win.mp3");
+        playAudio("D:\\OOP (by Java)\\DeeDictionaryApplication\\src\\main\\resources\\Sound\\win.mp3");
         i = 1;
     }
 

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="bgScramble" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #3C6291;" stylesheets="@../Style.css" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deedictionaryapplication.Controllers.ScrambleGui">
+<AnchorPane id="bgScramble" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #3C6291;" stylesheets="@../Style.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="deedictionaryapplication.Controllers.ScrambleGui">
    <children>
       <Button fx:id="submit" layoutX="340.0" layoutY="309.0" mnemonicParsing="false" onAction="#handleSubmitBtn" prefHeight="30.0" prefWidth="85.0" styleClass="Button" stylesheets="@../Style.css" text="SUBMIT" textFill="WHITE">
          <font>
@@ -21,7 +21,7 @@
          </cursor></Button>
       <Pane id="searchBox" fx:id="pane" layoutX="230.0" layoutY="234.0" prefHeight="50.0" prefWidth="306.0" stylesheets="@../Style.css">
          <children>
-            <Button fx:id="cancel" layoutX="263.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: TRANSPARENT;" stylesheets="@../Style.css">
+            <Button fx:id="cancel" layoutX="263.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: TRANSPARENT;" stylesheets="@../Style.css" visible="false">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -45,7 +45,7 @@
             <Font name="Arial Rounded MT Bold" size="24.0" />
          </font>
       </Label>
-      <Button fx:id="next" layoutX="555.0" layoutY="244.0" mnemonicParsing="false" onAction="#handleNextBtn" prefHeight="30.0" prefWidth="85.0" styleClass="Button" stylesheets="@../Style.css" textFill="WHITE">
+      <Button fx:id="next" layoutX="555.0" layoutY="244.0" mnemonicParsing="false" onAction="#handleNextBtn" prefHeight="30.0" prefWidth="92.0" styleClass="Button" stylesheets="@../Style.css" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="16.0" />
          </font>

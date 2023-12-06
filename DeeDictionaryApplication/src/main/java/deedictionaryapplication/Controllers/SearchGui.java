@@ -7,21 +7,16 @@ import deedictionaryapplication.DictionaryCommandline.TextToSpeech;
 import deedictionaryapplication.DictionaryCommandline.Word;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 
-public class SearchGui implements Initializable {
+public class SearchGui implements Initializable, BaseGui {
     @FXML
     private Pane headerOfExplanation;
     @FXML
@@ -49,7 +44,8 @@ public class SearchGui implements Initializable {
     private int indexOfSelectedWord;
     private int firstIndexOfListFound = 0;
 
-    private void setListDefault(int index) {
+    @Override
+    public void setListDefault(int index) {
         list.clear();
         for (int i = index; i < index + 20; i++) list.add(dictionary.get(i).getWord_target());
         listResults.setItems(list);
@@ -57,7 +53,8 @@ public class SearchGui implements Initializable {
         explanation.setText(dictionary.get(index).getWord_explain());
     }
 
-    private void refreshAfterDelete() {
+    @Override
+    public void refreshAfterDelete() {
         for (int i = 0; i < list.size(); i++)
             if (list.get(i).equals(englishWord.getText())) {
                 list.remove(i);
@@ -70,8 +67,9 @@ public class SearchGui implements Initializable {
         setListDefault(0);
     }
 
+    @Override
     @FXML
-    private void handleOnKeyTyped() {
+    public void handleOnKeyTyped() {
         list.clear();
         String searchKey = searchTerm.getText().trim();
         list = dictionaryManagement.lookupWord(dictionary, searchKey);
@@ -83,6 +81,27 @@ public class SearchGui implements Initializable {
             headerList.setText("Kết quả liên quan");
             listResults.setItems(list);
             firstIndexOfListFound = dictionaryManagement.searchWord(dictionary, list.get(0));
+        }
+    }
+
+    @Override
+    @FXML
+    public void handleClickAWord() {
+        String selectedWord = listResults.getSelectionModel().getSelectedItem();
+        if (selectedWord != null) {
+            indexOfSelectedWord = dictionaryManagement.searchWord(dictionary, selectedWord);
+            if (indexOfSelectedWord == -1) return;
+            englishWord.setText(dictionary.get(indexOfSelectedWord).getWord_target());
+            explanation.setText(dictionary.get(indexOfSelectedWord).getWord_explain());
+            int indexOfWord = dictionaryManagement.searchWord(history, englishWord.getText());
+            if (indexOfWord >= 0) {
+                dictionaryManagement.deleteWordToHistory(history, indexOfWord);
+            }
+            dictionaryManagement.addWordToHistoryInSQL(history, englishWord.getText(), explanation.getText());
+            headerOfExplanation.setVisible(true);
+            explanation.setVisible(true);
+            explanation.setEditable(false);
+            saveBtn.setVisible(false);
         }
     }
 
@@ -116,26 +135,7 @@ public class SearchGui implements Initializable {
         notAvailableAlert.setVisible(false);
     }
 
-    @FXML
-    private void handleClickAWord() {
-        String selectedWord = listResults.getSelectionModel().getSelectedItem();
-        if (selectedWord != null) {
-            indexOfSelectedWord = dictionaryManagement.searchWord(dictionary, selectedWord);
-            if (indexOfSelectedWord == -1) return;
-            englishWord.setText(dictionary.get(indexOfSelectedWord).getWord_target());
-            explanation.setText(dictionary.get(indexOfSelectedWord).getWord_explain());
-            int indexOfWord = dictionaryManagement.searchWord(history, englishWord.getText());
-            if (indexOfWord >= 0) {
-                dictionaryManagement.deleteWordToHistory(history, indexOfWord);
-            }
-            dictionaryManagement.addWordToHistoryInSQL(history, englishWord.getText(), explanation.getText());
-            headerOfExplanation.setVisible(true);
-            explanation.setVisible(true);
-            explanation.setEditable(false);
-            saveBtn.setVisible(false);
-        }
-    }
-
+    @Override
     public void handleClickSoundBtn() {
         if (!englishWord.getText().isEmpty()) {
             speech.speak(dictionary.get(indexOfSelectedWord).getWord_target());
@@ -145,6 +145,17 @@ public class SearchGui implements Initializable {
         }
     }
 
+    public void handleClickEditBtn() {
+        if (!englishWord.getText().isEmpty()) {
+            explanation.setEditable(true);
+            saveBtn.setVisible(true);
+        } else {
+            Alert alertWarning = alerts.alertWarning("Chỉnh sửa từ", "Bạn chưa chọn từ muốn chỉnh sửa!");
+            Optional<ButtonType> option = alertWarning.showAndWait();
+        }
+    }
+
+    @Override
     public void handleClickDeleteBtn() {
         if (!englishWord.getText().isEmpty()) {
             Alert alertWarning = alerts.alertWarning("Xóa từ", "Bạn có chắc chắn muốn xóa từ này?");
@@ -161,16 +172,6 @@ public class SearchGui implements Initializable {
             Optional<ButtonType> option = alertWarning.showAndWait();
         }
 
-    }
-
-    public void handleClickEditBtn() {
-        if (!englishWord.getText().isEmpty()) {
-            explanation.setEditable(true);
-            saveBtn.setVisible(true);
-        } else {
-            Alert alertWarning = alerts.alertWarning("Chỉnh sửa từ", "Bạn chưa chọn từ muốn chỉnh sửa!");
-            Optional<ButtonType> option = alertWarning.showAndWait();
-        }
     }
 
     public void handleClickSaveBtn() {

@@ -1,13 +1,8 @@
 package deedictionaryapplication.DictionaryCommandline;
 
-import deedictionaryapplication.DictionaryCommandline.Dictionary;
 import deedictionaryapplication.Trie.Trie;
-import deedictionaryapplication.DictionaryCommandline.Word;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,13 +10,13 @@ import java.util.Comparator;
 import java.util.List;
 
 public class DictionaryManagement {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/dictionary";
+    private static final String DB_URL = "jdbc:mysql://localhost:3307/deedictionary";
     private static final String USER = "root";
-    private static final String PASS = "27092004";
+    private static final String PASS = "tenladuc";
 
     private static Connection CONNECTION = null;
 
-    private Trie trie = new Trie();
+    private final Trie trie = new Trie();
 
     public void getConnection() {
         try {
@@ -32,7 +27,7 @@ public class DictionaryManagement {
             e.printStackTrace();
         }
     }
-
+/**
     public void exportToFile(Dictionary dictionary, String DB_URL) {
         try {
             FileWriter fileWriter = new FileWriter(DB_URL);
@@ -46,7 +41,7 @@ public class DictionaryManagement {
             System.out.println("Something went wrong: " + e);
         }
     }
-
+*/
     public static String formatText(String inputText) {
         // Thay thế tất cả các thẻ <br/> bằng dấu xuống dòng
         String result = inputText.replaceAll("<br\\s*/?>", System.lineSeparator());
@@ -57,7 +52,6 @@ public class DictionaryManagement {
         return result;
     }
 
-
     public void getAllWords(Dictionary dictionary) {
         final String SQLQuery = "SELECT * FROM dictionary";
         try (PreparedStatement ps = CONNECTION.prepareStatement(SQLQuery);
@@ -65,6 +59,30 @@ public class DictionaryManagement {
             while (rs.next()) {
                 String format = formatText(rs.getString(3));
                 dictionary.add(new Word(rs.getString(2), format));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void getAllWordsInBookmark(Dictionary bookmark) {
+        final String SQLQuery = "SELECT * FROM bookmark";
+        try (PreparedStatement ps = CONNECTION.prepareStatement(SQLQuery);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                bookmark.add(new Word(rs.getString(2), rs.getString(3)));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void getAllWordsInHistory(Dictionary history) {
+        final String SQLQuery = "SELECT * FROM history";
+        try (PreparedStatement ps = CONNECTION.prepareStatement(SQLQuery);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                history.add(new Word(rs.getString(2), rs.getString(3)));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -146,6 +164,10 @@ public class DictionaryManagement {
         }
     }
 
+    public void removeWordFromTrie(String target) {
+        trie.delete(target);
+    }
+
     public void deleteWord(Dictionary dictionary, int index) {
         try {
             Word deletedWord = dictionary.remove(index);
@@ -179,83 +201,17 @@ public class DictionaryManagement {
         }
     }
 
-
-    public void addWord(Dictionary dictionary, String target, String meaning) {
-        try {
-            String insertSQL = "INSERT INTO dictionary (target, definition) VALUES (?, ?)";
-            PreparedStatement preparedStatement = CONNECTION.prepareStatement(insertSQL);
-            preparedStatement.setString(1, target);
-            preparedStatement.setString(2, meaning);
-
-            int rowsAffected = preparedStatement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                dictionary.add(new Word(target, meaning));
-                trie.insert(target);
-
-                System.out.println("Word added successfully to MySQL and dictionary.");
-            } else {
-                System.out.println("Failed to add the word to MySQL.");
-            }
-        } catch (SQLException e) {
-            System.out.println("SQL error: " + e.getMessage());
-        }
-    }
-
-    public void addWordToBookmarkInSQL(Dictionary bookmark, String target, String meaning) {
-        try {
-            String querySQL = "INSERT INTO bookmark (target, definition) VALUES (?, ?)";
-            PreparedStatement preparedStatement = CONNECTION.prepareStatement(querySQL);
-            preparedStatement.setString(1, target);
-            preparedStatement.setString(2, meaning);
-            int rowsAffected = preparedStatement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                bookmark.add(new Word(target, meaning));
-                System.out.println("Word added successfully to MySQL and dictionary.");
-            } else {
-                System.out.println("Failed to add the word to MySQL.");
-            }
-        } catch (SQLException e) {
-            System.out.println("SQL error: " + e.getMessage());
-        }
-    }
-
-    public void getAllWordsInHistory(Dictionary history) {
-        final String SQLQuery = "SELECT * FROM history";
-        try (PreparedStatement ps = CONNECTION.prepareStatement(SQLQuery);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                history.add(new Word(rs.getString(2), rs.getString(3)));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void getAllWordsInBookmark(Dictionary bookmark) {
-        final String SQLQuery = "SELECT * FROM bookmark";
-        try (PreparedStatement ps = CONNECTION.prepareStatement(SQLQuery);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                bookmark.add(new Word(rs.getString(2), rs.getString(3)));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void deleteWordToBookmark(Dictionary bookmark, int index) {
         try {
             Word deletedWord = bookmark.remove(index);
-            deleteWordInBookmark(deletedWord);
+            deleteWordToBookmarkInSQL(deletedWord);
             removeWordFromTrie(deletedWord.getWord_target());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
 
-    public void deleteWordInBookmark(Word word) {
+    public void deleteWordToBookmarkInSQL(Word word) {
         if (word != null) {
             try {
                 String deleteSQL = "DELETE FROM bookmark WHERE target = ?";
@@ -270,7 +226,6 @@ public class DictionaryManagement {
                     System.out.println("Failed to remove the word from MySQL.");
                 }
 
-                //CONNECTION.close();
             } catch (SQLException e) {
                 System.out.println("SQL error: " + e.getMessage());
             }
@@ -282,14 +237,14 @@ public class DictionaryManagement {
     public void deleteWordToHistory(Dictionary history, int index) {
         try {
             Word deletedWord = history.remove(index);
-            deleteWordInHistory(deletedWord);
+            deleteWordToHistoryInSQL(deletedWord);
             removeWordFromTrie(deletedWord.getWord_target());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
 
-    public void deleteWordInHistory(Word word) {
+    public void deleteWordToHistoryInSQL(Word word) {
         if (word != null) {
             try {
                 String deleteSQL = "DELETE FROM history WHERE target = ?";
@@ -304,12 +259,57 @@ public class DictionaryManagement {
                     System.out.println("Failed to remove the word from MySQL.");
                 }
 
-                //CONNECTION.close();
             } catch (SQLException e) {
                 System.out.println("SQL error: " + e.getMessage());
             }
         } else {
             System.out.println("Invalid word.");
+        }
+    }
+
+    public void addWord(Dictionary dictionary, String target, String meaning) {
+        try {
+            // Thêm từ mới vào cơ sở dữ liệu
+            String insertSQL = "INSERT INTO dictionary (target, definition) VALUES (?, ?)";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(insertSQL);
+            preparedStatement.setString(1, target);
+            preparedStatement.setString(2, meaning);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                // Nếu thêm từ mới thành công, thêm nó vào từ điển và cập nhật cây trie
+                dictionary.add(new Word(target, meaning));
+                trie.insert(target);
+
+                System.out.println("Word added successfully to MySQL and dictionary.");
+            } else {
+                System.out.println("Failed to add the word to MySQL.");
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL error: " + e.getMessage());
+        }
+    }
+
+    public void addWordToBookmarkInSQL(Dictionary bookmark, String target, String meaning) {
+        try {
+            // Thêm từ mới vào cơ sở dữ liệu
+            String insertSQL = "INSERT INTO bookmark (target, definition) VALUES (?, ?)";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(insertSQL);
+            preparedStatement.setString(1, target);
+            preparedStatement.setString(2, meaning);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                // Nếu thêm từ mới thành công, thêm nó vào từ điển và cập nhật cây trie
+                bookmark.add(new Word(target, meaning));
+                System.out.println("Word added successfully to MySQL and bookmark.");
+            } else {
+                System.out.println("Failed to add the word to MySQL.");
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL error: " + e.getMessage());
         }
     }
 
@@ -364,7 +364,6 @@ public class DictionaryManagement {
         return allWords;
     }
 
-
     public String getRandomAlphabeticWordBySize(ArrayList<String> words, int minLength, int maxLength) {
         ArrayList<String> filteredWords = new ArrayList<>();
 
@@ -374,17 +373,15 @@ public class DictionaryManagement {
                 filteredWords.add(word);
             }
         }
-
         if (filteredWords.isEmpty()) {
-            return null; // Trả về null nếu không có từ nào thỏa mãn điều kiện
+            return null;
         }
-
         int randomIndex = (int) (Math.random() * filteredWords.size());
+
         return filteredWords.get(randomIndex).toUpperCase();
     }
 
     private boolean isAlphabetic(String word) {
-        // Kiểm tra xem từ có chứa chỉ ký tự là chữ cái hay không
         return word.matches("[a-zA-Z]+");
     }
 
@@ -393,7 +390,6 @@ public class DictionaryManagement {
         for (char c : word.toCharArray()) {
             characters.add(c);
         }
-
         Collections.shuffle(characters);
 
         StringBuilder shuffledWord = new StringBuilder();
@@ -403,10 +399,8 @@ public class DictionaryManagement {
 
         return shuffledWord.toString();
     }
-    public void removeWordFromTrie(String target) {
-        trie.delete(target);
-    }
-        public void setTrie(Dictionary dictionary) {
+
+    public void setTrie(Dictionary dictionary) {
         for (Word word : dictionary) {
             trie.insert(word.getWord_target());
         }
